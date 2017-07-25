@@ -16,6 +16,7 @@
 #include "FolderBrowser.hpp"
 #include "Data.hpp"
 #include "AdvancedClock.hpp"
+#include "RichText.hpp"
 
 
 #endif // DEF_WILDGOATPACKAGE_HPP
