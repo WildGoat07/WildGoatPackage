@@ -24,6 +24,9 @@ namespace wp
          */
         struct Part
         {
+            friend RichText;
+        private:
+            bool m_return;
         public:
             std::string text;/**< the text of the part */
             sf::Color fillColor;/**< the fill color of the text */
@@ -47,7 +50,7 @@ namespace wp
     private:
         std::vector<std::shared_ptr<sf::Text> > m_buffer;
         sf::Font const* m_font;
-        std::vector<Part const*> m_parts;
+        std::vector<Part> m_parts;
         sf::Uint32 m_size;
         virtual void draw(sf::RenderTarget&, sf::RenderStates) const override;
     public:

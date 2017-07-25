@@ -1,9 +1,11 @@
 #include "RichText.hpp"
+#include <iostream>
 
 using namespace wp;
 
 RichText::Part::Part(std::string const& str, sf::Color col1, sf::Uint32 st, sf::Color col2, float th)
 {
+    m_return = false;
     text = str;
     fillColor = col1;
     outlineColor = col2;
@@ -17,7 +19,27 @@ RichText::RichText()
 }
 void RichText::addPart(Part const& p)
 {
-    m_parts.push_back(&p);
+    std::vector<Part> subList;
+    Part tmp = p;
+    tmp.text = "";
+    for (int i = 0;i<p.text.size();i++)
+    {
+        if (p.text[i] == '\n')
+        {
+            tmp.m_return = true;
+            subList.push_back(tmp);
+            tmp.text = "";
+            tmp.m_return = false;
+        }
+        else
+        {
+            tmp.text += p.text[i];
+        }
+    }
+    if (tmp.text.size() > 0)
+        subList.push_back(tmp);
+    for (int i = 0;i<subList.size();i++)
+        m_parts.push_back(subList[i]);
 }
 void RichText::clear()
 {
@@ -42,22 +64,32 @@ sf::Uint32 RichText::getSize() const
 }
 void RichText::generate()
 {
-    float offset = 0;
+    sf::Vector2f offset;
     m_buffer.clear();
+    float decal = 9999999;
     for (int i = 0;i<m_parts.size();i++)
     {
         std::shared_ptr<sf::Text> tmp(new sf::Text());
-        tmp->setString(m_parts[i]->text);
-        tmp->setFillColor(m_parts[i]->fillColor);
-        tmp->setOutlineColor(m_parts[i]->outlineColor);
-        tmp->setOutlineThickness(m_parts[i]->outlineThickness);
-        tmp->setStyle(m_parts[i]->style);
+        tmp->setString(m_parts[i].text);
+        tmp->setFillColor(m_parts[i].fillColor);
+        tmp->setOutlineColor(m_parts[i].outlineColor);
+        tmp->setOutlineThickness(m_parts[i].outlineThickness);
+        tmp->setStyle(m_parts[i].style);
         tmp->setFont(*m_font);
+        tmp->setPosition(offset);
         tmp->setCharacterSize(m_size);
-        tmp->setPosition(offset, -tmp->getLocalBounds().top);
+        if (decal > tmp->getLocalBounds().top)
+            decal = tmp->getLocalBounds().top;
         m_buffer.push_back(tmp);
-        offset += tmp->getLocalBounds().width;
+        offset = tmp->findCharacterPos(m_parts[i].text.size());
+        if (m_parts[i].m_return)
+        {
+            offset.x = 0;
+            offset.y += m_size;
+        }
     }
+    for (int i = 0;i<m_buffer.size();i++)
+        m_buffer[i]->move(0, -decal);
 }
 void RichText::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
