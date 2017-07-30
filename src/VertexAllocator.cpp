@@ -49,6 +49,14 @@ VertexAllocator::VertexSquare VertexAllocator::operator[](unsigned int index)
         res.array[i] = &(m_array[index*4+i]);
     return res;
 }
+void VertexAllocator::VertexSquare::update()
+{
+    sf::Transform tr = getTransform();
+    array[0]->position = tr.transformPoint(array[0]->position);
+    array[1]->position = tr.transformPoint(array[1]->position);
+    array[2]->position = tr.transformPoint(array[2]->position);
+    array[3]->position = tr.transformPoint(array[3]->position);
+}
 VertexAllocator::VertexSquare VertexAllocator::allocateNewVertex(sf::FloatRect box, sf::FloatRect tex)
 {
     m_array.append(sf::Vertex());

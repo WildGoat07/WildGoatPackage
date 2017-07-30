@@ -27,7 +27,17 @@ namespace wp
          * \param ParamList* : list of parameters source.
          *
          */
-        Variable( ParamList* = nullptr);
+        Variable()
+        {
+            m_list = nullptr;
+            m_constant = true;
+        }
+
+        Variable(ParamList* l)
+        {
+            m_list = l;
+            m_constant = true;
+        }
         /** \brief Constructor.
         *
         *   If using a std::string as value type, set to true the bool to set the value as a constant and not as reference.
@@ -37,14 +47,28 @@ namespace wp
          * \param bool : true for constant.
          *
          */
-        Variable(T const&, ParamList*, bool = false);
+        Variable(T const& val, ParamList* l, bool cons)
+        {
+            if (!cons)
+                m_reference = val;
+            else
+            {
+                m_value = val;
+                m_reference = nullptr;
+            }
+            m_list = l;
+        }
         /** \brief Constructor.
          *
          * \param std::string const& : reference of the variable.
          * \param ParamList* : list of parameters source.
          *
          */
-        Variable(std::string const&, ParamList*);
+        Variable(std::string const& ref, ParamList* l)
+        {
+            m_reference = ref;
+            m_list = l;
+        }
         /** \brief Sets the variable a constant value.
          *
          * \param T const& : value.
