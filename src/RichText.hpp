@@ -119,6 +119,32 @@ namespace wp
          */
         sf::FloatRect getGlobalBounds() const;
     };
+
+    inline void RichText::clear()
+    {
+        m_parts.clear();
+        m_buffer.clear();
+    }
+    inline void RichText::setFont(sf::Font const& f)
+    {
+        m_font = &f;
+    }
+    inline sf::Font const& RichText::getFont() const
+    {
+        return *m_font;
+    }
+    inline void RichText::setSize(sf::Uint32 s)
+    {
+        m_size = s;
+    }
+    inline sf::Uint32 RichText::getSize() const
+    {
+        return m_size;
+    }
+    inline sf::FloatRect RichText::getGlobalBounds() const
+    {
+        return getTransform().transformRect(getLocalBounds());
+    }
 }
 
 #endif // DEF_RICH_TEXT_HPP

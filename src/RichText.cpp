@@ -41,27 +41,6 @@ void RichText::addPart(Part const& p)
     for (int i = 0;i<subList.size();i++)
         m_parts.push_back(subList[i]);
 }
-void RichText::clear()
-{
-    m_parts.clear();
-    m_buffer.clear();
-}
-void RichText::setFont(sf::Font const& f)
-{
-    m_font = &f;
-}
-sf::Font const& RichText::getFont() const
-{
-    return *m_font;
-}
-void RichText::setSize(sf::Uint32 s)
-{
-    m_size = s;
-}
-sf::Uint32 RichText::getSize() const
-{
-    return m_size;
-}
 void RichText::generate()
 {
     sf::Vector2f offset;
@@ -114,8 +93,4 @@ sf::FloatRect RichText::getLocalBounds() const
             box.height = tmp.y;
     }
     return box;
-}
-sf::FloatRect RichText::getGlobalBounds() const
-{
-    return getTransform().transformRect(getLocalBounds());
 }

@@ -17,6 +17,7 @@
 #include "Data.hpp"
 #include "AdvancedClock.hpp"
 #include "RichText.hpp"
+#include "Variable.hpp"
 
 
 #endif // DEF_WILDGOATPACKAGE_HPP
