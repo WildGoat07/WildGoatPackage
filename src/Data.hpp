@@ -276,17 +276,20 @@ namespace wp
     };
     inline void Data::Value::setInt(long long v)
     {
-        m_parent->m_requestUpdate = true;
+        if (m_parent != nullptr)
+            m_parent->m_requestUpdate = true;
         m_value = Various::intToString(v);
     }
     inline void Data::Value::setDouble(long double v)
     {
-        m_parent->m_requestUpdate = true;
+        if (m_parent != nullptr)
+            m_parent->m_requestUpdate = true;
         m_value = Various::doubleToString(v);
     }
     inline void Data::Value::setString(std::string const& v)
     {
-        m_parent->m_requestUpdate = true;
+        if (m_parent != nullptr)
+            m_parent->m_requestUpdate = true;
         m_value = v;
     }
     inline long double Data::Value::getValue() const

@@ -5,14 +5,17 @@ using namespace wp;
 
 Data::Value::Value(long long v)
 {
+    m_parent = nullptr;
     setInt(v);
 }
 Data::Value::Value(long double v)
 {
+    m_parent = nullptr;
     setDouble(v);
 }
 Data::Value::Value(std::string const& v)
 {
+    m_parent = nullptr;
     setString(v);
 }
 std::shared_ptr<Data::Value> Data::append(std::string const& ID)
