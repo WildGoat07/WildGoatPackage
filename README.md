@@ -1,6 +1,6 @@
 ![img](https://github.com/WildGoat07/WildGoatPackage-Release/blob/master/logo%20x256.png)
 # WildGoatPackage-Release
-A little project i'm working on. Provide some helpful user friendly classes.<br/>**Require SFML for the graphic classes**.<br/>**Works only on Windows at the moment**.
+A little project i'm working on. Provides some helpful user friendly classes.<br/>**Requires SFML for the graphic classes**.<br/>**Works only on Windows at the moment**.
 
 ## Features
 
