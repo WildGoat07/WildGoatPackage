@@ -26,6 +26,7 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 * `wp::AnimTimeline` : A better way to use `wp::Animator` with multiple animations instead of only one movement.
 * `wp::RichText` : JSON support to create even more easily beautiful and meaningful texts.
+* `wp::JSON` : A general class to load JSON format.
 * `wp::Gui` : A namespace where there will be added... a GUI for SFML. Very highly based on [SFGUI](https://github.com/TankOs/SFGUI) (which is already well made), this one will be more SFML-like and using only SFML Graphics.
 * A wiki !! And some examples.
 
