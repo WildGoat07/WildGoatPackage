@@ -60,7 +60,7 @@ namespace wp
         *
         *   Returns the full path of the file ("C:/folder/example.txt"). May be wrong for files specified relatively.
          *
-         * \return std::string : the full name.
+         * \return std::string : the full path.
          *
          */
         std::string getAbsoluteDirectory() const;
