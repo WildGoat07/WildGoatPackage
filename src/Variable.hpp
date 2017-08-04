@@ -47,7 +47,7 @@ namespace wp
          * \param bool : true for constant.
          *
          */
-        Variable(T const& val, ParamList* l, bool cons)
+        Variable(T const& val, ParamList* l, bool cons = true)
         {
             if (!cons)
                 m_reference = val;
