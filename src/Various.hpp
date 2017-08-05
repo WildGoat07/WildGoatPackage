@@ -8,9 +8,13 @@
 #include <SFML/Audio.hpp>
 #include <cmath>
 #include <windows.h>
+#include <memory>
 #include "Function.hpp"
 #define PI 3.141592653589793
 #define EXP 2.718281828459045
+
+
+using std::shared_ptr;
 
 namespace wp
 {
@@ -67,19 +71,19 @@ namespace wp
         *   Converts an hexadecimal number (as a string) to a decimal number.
          *
          * \param const& std::string : hexadecimal number.
-         * \return long : decimal number.
+         * \return long long : decimal number.
          *
          */
-        static long  hexToDec(std::string const&);
+        static long long  hexToDec(std::string const&);
         /** \brief Converts dec to hex
         *
         *   Converts a decimal number to an hexadecimal number (as a string).
          *
-         * \param long : decimal number.
+         * \param long long : decimal number.
          * \return std::string : hexadecimal number.
          *
          */
-        static std::string decToHex(long);
+        static std::string decToHex(long long);
         /** \brief Converts a double to a string.
          *
          * \param long double : number to convert.
@@ -354,15 +358,15 @@ namespace wp
     {
         return decToHex(stringToDouble(dec));
     }
-    inline long Various::hexToDec(std::string const& hex)
+    inline long long Various::hexToDec(std::string const& hex)
     {
         std::stringstream ss;
         ss << hex;
-        long dec;
+        long long dec;
         ss >> std::hex >> dec;
         return dec;
     }
-    inline std::string Various::decToHex(long dec)
+    inline std::string Various::decToHex(long long dec)
     {
         std::stringstream ss;
         ss << std::hex << dec;
