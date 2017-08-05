@@ -53,6 +53,7 @@ namespace wp
         std::vector<Part> m_parts;
         sf::Uint32 m_size;
         virtual void draw(sf::RenderTarget&, sf::RenderStates) const override;
+        bool nextValidChar(sf::Uint16&, std::string const&, sf::Uint16&, sf::Uint16&) const;
     public:
         /** \brief Constructor.
          *
@@ -118,6 +119,13 @@ namespace wp
          *
          */
         sf::FloatRect getGlobalBounds() const;
+        /** \brief Load from a JSON string.
+        *
+        *   \param std::string const& : JSON.
+        *   \return bool : false if failed.
+         *
+         */
+        bool loadJSON(std::string const&);
     };
 
     inline void RichText::clear()
