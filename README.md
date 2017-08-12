@@ -16,6 +16,7 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 * `wp::FileManager` : A fast and easy way to explore files using C++.
 * `wp::FolderBrowser` : Same as `wp::Browser` but for folders.
 * `wp::Function` : A basic interface to create (whatever you like) functions. Some basic functions are already added. *Not very useful at the moment, future features will maybe use this*.
+* `wp::JSON` : A module to parse a JSON formatted string or generate one and do whatever you want with it.
 * `wp::Matrix` : Just a class to handle 2 dimensionnal matrix with basic operators(+, -, *) and some functions to get the inverse, minor, adjugate, ...
 * `wp::RichText` : A class that can display text (like `sf::Text`) but with different colors/style in only one object (which can't be made using only one `sf::Text`). Supports JSON.
 * `wp::Variable` : A dynamic variable that can have either a constant value (still variable though) or a reference to another one inside a list of parameters. *Same as `wp::Function`, it's useless at the moment*.
@@ -25,7 +26,6 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 ## Added soon or future projects
 
 * `wp::AnimTimeline` : A better way to use `wp::Animator` with multiple animations instead of only one movement.
-* `wp::JSON` : A general class to load JSON format.
 * `wp::Gui` : A namespace where there will be added... a GUI for SFML. Very highly based on [SFGUI](https://github.com/TankOs/SFGUI) (which is already well made), this one will be more SFML-like and using only SFML Graphics.
 * `wp::LightManager` : A fast way to manage lights in SFML.
 * A wiki !! And some examples.
