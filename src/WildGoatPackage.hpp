@@ -18,6 +18,7 @@
 #include "AdvancedClock.hpp"
 #include "RichText.hpp"
 #include "Variable.hpp"
+#include "JSON/JSON.hpp"
 
 
 #endif // DEF_WILDGOATPACKAGE_HPP
