@@ -18,7 +18,12 @@
 #include "AdvancedClock.hpp"
 #include "RichText.hpp"
 #include "Variable.hpp"
+
+#include "gui/Gui.hpp"
 #include "JSON/JSON.hpp"
+#include "lightManager/LightManager.hpp"
+#include "pathFinding/PathFinder.hpp"
+#include "pathFinding/TilePathFinder.hpp"
 
 
 #endif // DEF_WILDGOATPACKAGE_HPP
