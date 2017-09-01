@@ -82,7 +82,10 @@ void JSONParser::parseJSON(std::string const& str)
     pushCurs(str, cursor);
     m_content = getValueFromString(str, cursor);
 }
-
+shared_ptr<Value> JSONParser::getValue() const
+{
+    return m_content;
+}
 void JSONParser::setContent(shared_ptr<Value> val)
 {
     m_content = val;

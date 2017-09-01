@@ -19,7 +19,6 @@
 #include "RichText.hpp"
 #include "Variable.hpp"
 
-#include "gui/Gui.hpp"
 #include "JSON/JSON.hpp"
 #include "lightManager/LightManager.hpp"
 #include "pathFinding/PathFinder.hpp"
