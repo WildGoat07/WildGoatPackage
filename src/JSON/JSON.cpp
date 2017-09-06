@@ -173,6 +173,7 @@ shared_ptr<Value> JSONParser::getValueFromString(std::string const& str, size_t&
                 return val;
             }
             val->values.push_back(getValueFromString(str, curs));
+            pushCurs(str, curs);
             if (curs >= str.size())
                 return shared_ptr<Value>();
             if (str[curs] == ',')
@@ -212,6 +213,7 @@ shared_ptr<Value> JSONParser::getValueFromString(std::string const& str, size_t&
             if (curs >= str.size())
                 return shared_ptr<Value>();
             val->values[tmp] = getValueFromString(str, curs);
+            pushCurs(str, curs);
             if (curs >= str.size())
                 return shared_ptr<Value>();
             if (str[curs] == ',')
