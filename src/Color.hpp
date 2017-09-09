@@ -17,6 +17,7 @@ namespace wp
     *   \class CMYKColor
     *
     *   Handles colors with the (cyan, magenta, yellow, key) components.
+    *   \see \ref color on the wiki
      */
     class CMYKColor
     {
@@ -77,6 +78,8 @@ namespace wp
          *
          */
         HSLColor asHSLColor() const;
+
+        operator sf::Color() const;
     };
 
     /** \brief Handles HSLA format.
@@ -84,6 +87,7 @@ namespace wp
     *   \class HSLColor
     *
     *   Handles colors with the (hue, saturation, lightness) components.
+    *   \see \ref color on the wiki
      */
     class  HSLColor
     {
@@ -142,6 +146,8 @@ namespace wp
          *
          */
         CMYKColor asCMYKColor() const;
+
+        operator sf::Color() const;
     };
     inline HSLColor CMYKColor::asHSLColor() const
     {

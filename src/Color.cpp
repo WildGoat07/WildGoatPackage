@@ -195,3 +195,13 @@ HSLColor::HSLColor(CMYKColor const& c)
 {
     *this = c.asRGBColor();
 }
+
+HSLColor::operator sf::Color() const
+{
+    return asRGBColor();
+}
+
+CMYKColor::operator sf::Color() const
+{
+    return asRGBColor();
+}
