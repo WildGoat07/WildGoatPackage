@@ -69,7 +69,7 @@ namespace wp
                         /// \brief Sets its precision.
             ///
             ///A higher precision will use more performance but will look better. For a static light, a high precision isn't needed while for a dynamic light a high precision could be needed.
-            ///The precision id the number of vertex of the light. Low precision will be noticed especially close to walls.
+            ///The precision is the number of vertex of the light. Low precision will be noticed especially close to walls.
             ///
             /// \param uint16_t : precision.
             /// \return void

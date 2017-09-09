@@ -53,35 +53,33 @@ void LightManager::setAmbientColor(sf::Color c)
 {
     m_ambientColor = c;
 }
-void LightManager::generate(sf::FloatRect rect)
+void LightManager::generate(sf::View view)
 {
+    m_render.setView(view);
+
+    sf::FloatRect rect;
+    {
+        sf::Vector2f p1 = m_render.mapPixelToCoords(sf::Vector2i());
+        sf::Vector2f p2 = m_render.mapPixelToCoords(sf::Vector2i(m_render.getSize().x, m_render.getSize().y));
+        sf::Vector2f p3 = m_render.mapPixelToCoords(sf::Vector2i(0, m_render.getSize().y));
+        sf::Vector2f p4 = m_render.mapPixelToCoords(sf::Vector2i(m_render.getSize().x, 0));
+        rect.left = std::min(std::min(p1.x, p2.x), std::min(p3.x, p4.x));
+        rect.top = std::min(std::min(p1.y, p2.y), std::min(p3.y, p4.y));
+        rect.width = std::max(std::max(p1.x, p2.x), std::max(p3.x, p4.x)) - rect.left;
+        rect.height = std::max(std::max(p1.y, p2.y), std::max(p3.y, p4.y)) - rect.top;
+    }
     std::vector<shared_ptr<PointLight> > drawRequired;
     for (int i = 0;i<m_lights.size();i++)
     {
         shared_ptr<PointLight> curr = m_lights[i];
-        if (rect.contains(curr->getPosition() + sf::Vector2f(curr->getRadius(), curr->getRadius())) ||
-            rect.contains(curr->getPosition() + sf::Vector2f(-curr->getRadius(), curr->getRadius())) ||
-            rect.contains(curr->getPosition() + sf::Vector2f(-curr->getRadius(), -curr->getRadius())) ||
-            rect.contains(curr->getPosition() + sf::Vector2f(curr->getRadius(), -curr->getRadius())))
+        sf::FloatRect rect2(curr->getPosition() - sf::Vector2f(curr->getRadius(), curr->getRadius()), sf::Vector2f(curr->getRadius()*2, curr->getRadius()*2));
+        if (rect.intersects(rect2))
         {
             drawRequired.push_back(curr);
-        }
-        else
-        {
-            sf::FloatRect rect2(curr->getPosition().x - curr->getRadius(), curr->getPosition().y - curr->getRadius(),
-                                curr->getRadius()*2, curr->getRadius()*2);
-            if (rect2.contains(sf::Vector2f(rect.left, rect.top)) ||
-                rect2.contains(sf::Vector2f(rect.left + rect.width, rect.top)) ||
-                rect2.contains(sf::Vector2f(rect.left + rect.width, rect.top + rect.height)) ||
-                rect2.contains(sf::Vector2f(rect.left, rect.top + rect.height)))
-            {
-                drawRequired.push_back(curr);
-            }
         }
     }
     m_render.clear(m_ambientColor);
         sf::RenderStates states;
-        states.transform.translate(-rect.left, -rect.top);
         states.blendMode = sf::BlendAdd;
     for (int i = 0;i<drawRequired.size();i++)
     {

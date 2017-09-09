@@ -73,11 +73,11 @@ namespace wp
             /////////////////////////////////////////////////
                         /// \brief Generates the texture.
             ///
-            /// \param sf::FloatRect : rectangle of the view to generate.
+            /// \param sf::View : view of the window used to draw to objects.
             /// \return void
             ///
             /////////////////////////////////////////////////
-            void generate(sf::FloatRect);
+            void generate(sf::View);
             /////////////////////////////////////////////////
                         /// \brief Sets the ambient color.
             ///
