@@ -2,12 +2,6 @@
 
 using namespace wp;
 
-VertexAllocator::VertexSquare::VertexSquare(VertexAllocator* ptr) :
-    parent(ptr)
-{
-
-}
-
 void VertexAllocator::VertexSquare::setSquare(sf::FloatRect box, sf::FloatRect tex)
 {
     array[0]->position.x = box.left;
@@ -44,7 +38,7 @@ VertexAllocator::VertexAllocator(unsigned int s) :
 }
 VertexAllocator::VertexSquare VertexAllocator::operator[](unsigned int index)
 {
-    VertexAllocator::VertexSquare res(this);
+    VertexAllocator::VertexSquare res;
     for (unsigned int i = 0;i<4;i++)
         res.array[i] = &(m_array[index*4+i]);
     return res;

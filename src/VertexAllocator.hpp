@@ -18,11 +18,7 @@ namespace wp
         */
         struct VertexSquare : public sf::Transformable
         {
-            friend VertexAllocator;
-        protected:
-        VertexSquare(VertexAllocator*);
         public:
-            const VertexAllocator* parent;/**< The parent's VertexAllocator. */
             sf::Vertex* array[4];/**< The vertices of the sprite. */
             /** \brief Synchronizes the transformations.
             *
