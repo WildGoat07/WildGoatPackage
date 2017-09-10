@@ -96,7 +96,7 @@ bool JSONParser::pushCurs(std::string const& str, size_t& curs) const
     while( !fin)
     {
         char car = str[curs];
-        if (car != ' ' && car != '\n')
+        if (car != ' ' && car != '\n' && car != '\t')
         {
             fin = true;
         }
