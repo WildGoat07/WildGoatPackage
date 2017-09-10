@@ -27,10 +27,8 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 ## Added soon or future projects
 
-* `wp::AnimTimeline` : A better way to use `wp::Animator` with multiple animations instead of only one movement.
 * `wp::Gui` : A namespace where there will be added... a GUI for SFML. Very highly based on [SFGUI](https://github.com/TankOs/SFGUI) (which is already well made), this one will be more SFML-like and using only SFML Graphics.
 * A wiki !! And some examples.
-* The 1.0 version will be Released when the `wp::JSON` and `wp::AnimTimeline` will be created and working perfectly.
 * More portability, can be used without SFML or Windows but without the its exclusive content.
 
 ----
