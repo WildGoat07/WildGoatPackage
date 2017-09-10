@@ -33,5 +33,5 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 ----
 
-To get the alpha version, see [here](https://github.com/WildGoat07/WildGoatPackage-Alpha).
-
+Developper : HANEN Nathan - aka WildGoat07
+contact : hanen.nathan@gmail.com
