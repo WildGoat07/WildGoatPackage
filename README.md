@@ -29,9 +29,10 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 * `wp::Gui` : A namespace where there will be added... a GUI for SFML. Very highly based on [SFGUI](https://github.com/TankOs/SFGUI) (which is already well made), this one will be more SFML-like and using only SFML Graphics.
 * A wiki !! And some examples.
-* More portability, can be used without SFML or Windows but without the its exclusive content.
+* More portability, can be used without SFML or Windows but without its exclusive content.
 
 ----
 
 Developper : HANEN Nathan - aka WildGoat07
+
 contact : hanen.nathan@gmail.com
