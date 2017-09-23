@@ -6,12 +6,14 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 * `wp::AdvancedClock` : An extended version of `wp::Chrono` where a time factor is added.
 * `wp::Animator` : An easy way to make simple animations (transformations only).
+* `wp::Archive` : A class to create easily archives of multiple files.
 * `wp::Bezier` : A class that can create and handle basic Bezier's curve (with *n* points).
 * `wp::Browser` : A class to browse and find (a) file(s) using the Windows native window (**Windows only**).
 * `wp::Chrono` : A `sf::Clock` which can be paused or set its actual time.
 * `wp::Color` : A fast way to convert HSLA / CMYKA / RBGA colors.
 * `wp::Cursor` : An easy interface to change the mouse cursor (**Windows only**).
 * `wp::Data` : A class that can store referenced values (`int`, `double`, or `std::string`) and save/load them.
+* `wp::Extractor` : A class used to extract archives done by `wp::Archive`.
 * `wp::File` : A class to extract basic informations from a file path (name, extension, path, or absolute path for relative ones).
 * `wp::FileManager` : A fast and easy way to explore files using C++.
 * `wp::FolderBrowser` : Same as `wp::Browser` but for folders (**Windows only**).
@@ -21,6 +23,7 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 * `wp::Matrix` : Just a class to handle 2 dimensionnal matrix with basic operators(+, -, *) and some functions to get the inverse, minor, adjugate, ...
 * `wp::pf` : short for *path finding*, a module with a path finding algorithm based on nodes or a tilemap. The algorithm used is the A* for optimal results and a high heuristic to always give the shortest path possible. 
 * `wp::RichText` : A class that can display text (like `sf::Text`) but with different colors/style in only one object (which can't be made using only one `sf::Text`). Supports JSON.
+* `wp::StandardInputStream` : A class to link a standard `std::iostream` to a `sf::InputStream`. 
 * `wp::Variable` : A dynamic variable that can have either a constant value (still variable though) or a reference to another one inside a list of parameters. *Same as `wp::Function`, it's useless at the moment*.
 * `wp::Various` : A bunch of various functions, such as a int to string converter (and string to int), a crypter (and uncrypter), calculate a vector's angle, some interpolations and way more (**Windows only**).
 * `wp::VertexAllocator` : An easy way to manage a `sf::VertexArray` to draw multiple elements like a tilemap. (Works only for quads).
