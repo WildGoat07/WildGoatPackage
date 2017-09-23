@@ -11,9 +11,9 @@
 
 namespace wp
 {
-    /** \brief Class to select a file/folder.
+    /** \brief Class to select a file.
     *
-    *   This class open the generic browser window to open/save (a) file(s) and folder. Note that this class require the library "libcomdlg32.a" linked.
+    *   This class open the generic browser window to open/save (a) file(s). Note that this class require the library "libcomdlg32.a" linked.
     *
     *   \class Browser
      */

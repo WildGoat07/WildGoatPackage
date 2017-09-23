@@ -16,7 +16,7 @@ namespace wp
         std::vector<File> m_files;
         std::string m_directory;
     public:
-        /** \brief Sets the new Directory.
+        /** \brief Sets the new directory.
         *
         *   Sets the directory from where to search the files.
          *
@@ -44,7 +44,7 @@ namespace wp
         void update();
         /** \brief Returns the size of the directory.
         *
-        *   Returns the size of all the files and folders in the current directory. Doesn't include subfolders and subfiles.
+        *   Returns the number of all the files and folders in the current directory. Doesn't include subfolders and subfiles.
          *
          * \return size_t : size of the directory.
          *

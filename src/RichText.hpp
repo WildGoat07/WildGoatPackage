@@ -119,9 +119,9 @@ namespace wp
          *
          */
         sf::FloatRect getGlobalBounds() const;
-        /** \brief Load from a JSON string.
+        /** \brief Load from a %JSON string.
         *
-        *   \param std::string const& : JSON.
+        *   \param std::string const& : %JSON.
         *   \return bool : false if failed.
          *
          */

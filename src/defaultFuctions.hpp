@@ -12,23 +12,23 @@ namespace wp
     class DefaultFunction : public Function
     {
     protected:
-        double m_degre = 1;
+        double m_degree = 1;
     public:
-        /** \brief Changes the degre.
+        /** \brief Changes the degree.
         *
-        *   Sets a new degre of the function.
+        *   Sets a new degree of the function.
          *
-         * \param double : the degre.
+         * \param double : the degree.
          * \return void
          *
          */
-        void setDegre(double);
-        /** \brief Returns the degre.
+        void setDegree(double);
+        /** \brief Returns the degree.
          *
-         * \return double : the degre.
+         * \return double : the degree.
          *
          */
-        double getDegre() const;
+        double getDegree() const;
     };
     /** \brief A quadratic Function.
     *
@@ -122,35 +122,35 @@ namespace wp
     };
     inline double QuadFunction::operator()(double v) const
     {
-        return wp::Various::quadInter(0, 1, v, m_degre);
+        return wp::Various::quadInter(0, 1, v, m_degree);
     }
-    inline void DefaultFunction::setDegre(double d)
+    inline void DefaultFunction::setDegree(double d)
     {
-        m_degre = d;
+        m_degree = d;
     }
-    inline double DefaultFunction::getDegre() const
+    inline double DefaultFunction::getDegree() const
     {
-        return m_degre;
+        return m_degree;
     }
     inline double SqrtFunction::operator()(double v) const
     {
-        return wp::Various::sqrtInter(0, 1, v, m_degre);
+        return wp::Various::sqrtInter(0, 1, v, m_degree);
     }
     inline double GaussFunction::operator()(double v) const
     {
-        return wp::Various::gaussInter(0, 1, v, m_degre);
+        return wp::Various::gaussInter(0, 1, v, m_degree);
     }
     inline double ReverseGaussFunction::operator()(double v) const
     {
-        return wp::Various::reverseGaussInter(0, 1, v, m_degre);
+        return wp::Various::reverseGaussInter(0, 1, v, m_degree);
     }
     inline double LinearFunction::operator()(double v) const
     {
-        return wp::Various::linearInter(0, 1, v, m_degre);
+        return wp::Various::linearInter(0, 1, v, m_degree);
     }
     inline LinearFunction::LinearFunction()
     {
-        m_degre = 0;
+        m_degree = 0;
     }
 }
 #endif // DEF_DEFAULT_FONCTIONS_HPP

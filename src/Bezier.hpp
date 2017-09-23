@@ -9,9 +9,11 @@
 
 namespace wp
 {
-    /** \brief Class that handle Bezier's curve.
+    /** \brief Class that handle %Bézier's curve.
     *
     *   \class Bezier
+    *
+    *   \see [Bézier curve on wikipedia](https://en.wikipedia.org/wiki/Bézier_curve)
      */
     class Bezier
     {
@@ -102,7 +104,7 @@ namespace wp
         size_t size() const;
         /** \brief Returns the length of the curve.
         *
-        *   Because the curve has an irrational length, you must specify a precision.
+        *   Because the curve has an irrational length, you must specify a precision. The precision specify in how many pieces the curve will be cut.
          *
          * \param uint32_t : precision.
          * \return long double : approximative length.

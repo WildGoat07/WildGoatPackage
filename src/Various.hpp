@@ -16,6 +16,12 @@
 
 using std::shared_ptr;
 
+/** \brief The base namespace of the library.
+*
+*The namespace includes everything in the library.
+ *
+ *\namespace wp.
+ */
 namespace wp
 {
     /** \brief Interface with various functions.
