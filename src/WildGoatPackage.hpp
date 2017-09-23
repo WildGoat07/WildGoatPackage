@@ -18,6 +18,7 @@
 #include "AdvancedClock.hpp"
 #include "RichText.hpp"
 #include "Variable.hpp"
+#include "StandardStream.hpp"
 
 #include "JSON/JSON.hpp"
 #include "lightManager/LightManager.hpp"
