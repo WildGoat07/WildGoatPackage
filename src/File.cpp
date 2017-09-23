@@ -101,14 +101,11 @@ namespace wp
     }
     bool File::exist() const
     {
-        char buff[MAX_PATH];
-        GetModuleFileName(nullptr, buff, MAX_PATH);
-        File tmp(buff);
-        struct stat buffer;
-        if (getFullPath()[1] == ':')
-            return (stat(getFullPath().c_str(), &buffer) == 0);
+        INT_PTR tmp = GetFileAttributesA(getFullPath().c_str());
+        if ((int)tmp == -1)
+            return false;
         else
-            return (stat((tmp.getPath() + getFullPath()).c_str(), &buffer) == 0);
+            return true;
     }
     bool File::isFolder() const
     {
@@ -140,5 +137,27 @@ namespace wp
             return getFullPath();
         else
             return tmp.getPath().substr(0, tmp.getPath().size()-1) + getFullPath();
+    }
+    long File::size() const
+    {
+        if (!exist())
+             return -1;
+        if (isFolder())
+            return -1;
+        std::ifstream tmp(getFullPath(), std::ios_base::binary);
+        tmp.seekg(0, std::ios_base::end);
+        return tmp.tellg();
+    }
+    File::Attributes File::getAttributes() const
+    {
+        Attributes tmp;
+        INT_PTR res = GetFileAttributesA(getFullPath().c_str());
+        tmp.archive = FILE_ATTRIBUTE_ARCHIVE & res;
+        tmp.compressed = FILE_ATTRIBUTE_COMPRESSED & res;
+        tmp.system = (FILE_ATTRIBUTE_DEVICE | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_VIRTUAL) & res;
+        tmp.hidden = FILE_ATTRIBUTE_HIDDEN & res;
+        tmp.readOnly = FILE_ATTRIBUTE_READONLY & res;
+        tmp.temporary = FILE_ATTRIBUTE_TEMPORARY & res;
+        return tmp;
     }
 }

@@ -4,6 +4,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <windows.h>
+#include <fstream>
 
 namespace wp
 {
@@ -19,6 +20,18 @@ namespace wp
         std::string m_name;
         std::string m_path;
     public:
+        /////////////////////////////////////////////////
+                /// \brief
+        /////////////////////////////////////////////////
+        struct Attributes
+        {
+            bool archive;
+            bool compressed;
+            bool system;
+            bool hidden;
+            bool readOnly;
+            bool temporary;
+        };
         /** \brief If the file exists.
         *
         *   Returns true if the file exists.
@@ -113,6 +126,21 @@ namespace wp
          *
          */
         bool isFolder() const;
+        /////////////////////////////////////////////////
+                /// \brief Returns the size of the file.
+        ///
+        ///Always returns -1 if isFolder() succeed or if exist() failed.
+        /// \return long : size of the file
+        ///
+        /////////////////////////////////////////////////
+        long size() const;
+        /////////////////////////////////////////////////
+                /// \brief Returns the Windows attributes of the file.
+        ///
+        /// \return Attributes : attributes of the file.
+        ///
+        /////////////////////////////////////////////////
+        Attributes getAttributes() const;
     };
 }
 
