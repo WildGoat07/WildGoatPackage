@@ -47,7 +47,7 @@ namespace wp
          * \param bool : true for constant.
          *
          */
-        Variable(T const& val, ParamList* l, bool cons = true)
+        Variable(T const& val, ParamList* l = nullptr, bool cons = true)
         {
             if (!cons)
                 m_reference = val;
@@ -64,7 +64,7 @@ namespace wp
          * \param ParamList* : list of parameters source.
          *
          */
-        Variable(std::string const& ref, ParamList* l)
+        Variable(std::string const& ref, ParamList* l = nullptr)
         {
             m_reference = ref;
             m_list = l;
@@ -108,6 +108,9 @@ namespace wp
          *
          */
         void setParameters(ParamList*);
+
+        operator T() const;
+        void operator =(T const&);
     };
 
     template<typename T>
@@ -115,6 +118,17 @@ namespace wp
     {
         m_value = val;
         m_constant = true;
+    }
+    template<typename T>
+    inline void Variable<T>::operator =(T const& val)
+    {
+        m_value = val;
+        m_constant = true;
+    }
+    template<typename T>
+    inline Variable<T>::operator T() const
+    {
+        return getValue();
     }
     template<typename T>
     inline void Variable<T>::setReference(std::string const& ref)
