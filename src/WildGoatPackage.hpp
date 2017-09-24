@@ -21,6 +21,7 @@
 #include "Archive.hpp"
 #include "StandardStream.hpp"
 
+#include "gui/gui.hpp"
 #include "JSON/JSON.hpp"
 #include "lightManager/LightManager.hpp"
 #include "pathFinding/PathFinder.hpp"
