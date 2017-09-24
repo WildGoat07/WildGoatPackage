@@ -34,7 +34,7 @@ namespace wp
             *   Creates automatically a square sprite from the parameters.
              *
              * \param sf::FloatRect : The square at the provided sizes.
-             * \param sf::FloatRect : The texture square (Optionnal).
+             * \param sf::FloatRect : The texture square (Optional).
              *
              *
              */
@@ -94,7 +94,7 @@ namespace wp
         *   Allocates a new square sprite.
         *
              * \param sf::FloatRect : The square at the provided sizes.
-             * \param sf::FloatRect : The texture square (Optionnal).
+             * \param sf::FloatRect : The texture square (Optional).
          * \return VertexSquare : The created sprite.
          *
          */

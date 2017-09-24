@@ -58,7 +58,7 @@ namespace wp
         *   Crypts a string that can't be uncrypted.
          *
          * \param const& std::string : the string to crypt.
-         * \param unsigned int : the length, must superior than the size of the string (Optionnal).
+         * \param unsigned int : the length, must superior than the size of the string (Optional).
          * \return std::string : the crypted string.
          *
          */
@@ -237,8 +237,8 @@ namespace wp
         *
         *   Returns a random number between the minimum and maximum. srand() required.
          *
-         * \param double : the minimum (0 by default) (Optionnal).
-         * \param double : the maximum (1 by default) (Optionnal).
+         * \param double : the minimum (0 by default) (Optional).
+         * \param double : the maximum (1 by default) (Optional).
          * \return double : a random number.
          *
          */
@@ -285,7 +285,7 @@ namespace wp
          *
          * \param sf::Vector2f : the point to operate.
          * \param const& sf::ConvexShape : the shape.
-         * \param sf::Vector2f : an infinite point (Optionnal).
+         * \param sf::Vector2f : an infinite point (Optional).
          * \return bool : true if there is a collision.
          *
          */
@@ -296,7 +296,7 @@ namespace wp
          *
          * \param sf::Vector2f : the point to operate.
          * \param const& std::vector<sf::Vector2f> : the shape.
-         * \param sf::Vector2f : an infinite point (Optionnal).
+         * \param sf::Vector2f : an infinite point (Optional).
          * \return bool : true if there is a collision.
          *
          */
@@ -331,7 +331,7 @@ namespace wp
         *   Truncates a number with a specified number of digits.
          *
          * \param double long : the number to truncate.
-         * \param int : the number of digits (Optionnal).
+         * \param int : the number of digits (Optional).
          * \return long double : the result.
          *
          */
@@ -341,7 +341,7 @@ namespace wp
         *   Truncates a number upper with a specified number of digits.
          *
          * \param double long : the number to truncate.
-         * \param int : the number of digits (Optionnal).
+         * \param int : the number of digits (Optional).
          * \return long double : the result.
          *
          */
@@ -351,7 +351,7 @@ namespace wp
         *   Rounds a number with a specified number of digits.
          *
          * \param double long : the number to round.
-         * \param int : the number of digits (Optionnal).
+         * \param int : the number of digits (Optional).
          * \return long double : the result.
          *
          */

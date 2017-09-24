@@ -91,7 +91,7 @@ namespace wp
         *   Sets a precise function for the rotation/scaling/motion using the filter. The function should follow the properties : f(0) = 0 and f(1) = 1.
          *
          * \param Function* = pointer to the function.
-         * \param Filter = filter (Optionnal).
+         * \param Filter = filter (Optional).
          * \return void
          *
          */

@@ -68,7 +68,7 @@ namespace wp
         void addExtension(Extension);
         /** \brief Sets the initial directory to start from.
         *
-        *   (Optionnal).
+        *   (Optional).
          *
          * \param std::string const& : directory.
          * \return void
@@ -77,7 +77,7 @@ namespace wp
         void setInitialDirectory(std::string const&);
         /** \brief Sets the initial file to start from.
         *
-        *   (Optionnal).
+        *   (Optional).
          *
          * \param File const& : file to start from.
          * \return void

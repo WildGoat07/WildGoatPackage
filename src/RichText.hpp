@@ -36,16 +36,13 @@ namespace wp
             /** \brief Constructor.
             *
             *   \param std::string const& : text
-            *   \param sf::Color : color
+            *   \param sf::Color : fill color
             *   \param sf::Uint32 : style
+            *   \param sf::Color : outline color
+            *   \param float : outline thickness
              *
              */
             Part(std::string const& = std::string(), sf::Color = sf::Color::Black, sf::Uint32 = 0, sf::Color = sf::Color::Black, float = 0);
-            /** \brief Updates the graphic text.
-             *
-             * \return void
-             *
-             */
         };
     private:
         std::vector<std::shared_ptr<sf::Text> > m_buffer;
