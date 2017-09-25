@@ -51,3 +51,7 @@ void Extendedtext::generate()
 {
     m_textBuff.generate();
 }
+void Extendedtext::setMaximalWidth(float w)
+{
+    m_textBuff.setTextWrappingSize(w);
+}

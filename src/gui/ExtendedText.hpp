@@ -44,7 +44,16 @@ namespace wp
             ///
             /////////////////////////////////////////////////
             void generate();
-
+            /////////////////////////////////////////////////
+                        /// \brief Sets the maximal width.
+            ///
+            ///For more informations, see at wp::RichText::setTextWrappingSize().
+            ///
+            /// \param float : width.
+            /// \return void
+            ///
+            /////////////////////////////////////////////////
+            void setMaximalWidth(float);
         };
     }
 }

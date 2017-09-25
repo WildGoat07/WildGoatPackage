@@ -126,7 +126,22 @@ namespace wp
          *
          */
         bool loadJSON(std::string const&);
+        /////////////////////////////////////////////////
+                /// \brief Sets the maximal width.
+        ///
+        ///Over this width, the text will be cut, except for the words that are longer than the maximal width.
+        ///
+        /// \param float : maximal width.
+        /// \return void
+        ///
+        /////////////////////////////////////////////////
         void setTextWrappingSize(float);
+        /////////////////////////////////////////////////
+                /// \brief Returns the maximal width.
+        ///
+        /// \return float : maximal width.
+        ///
+        /////////////////////////////////////////////////
         float getTextWrappingSize() const;
     };
 
