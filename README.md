@@ -33,7 +33,6 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 * A wiki !! And some examples.
 * More portability, can be used without SFML or Windows but without its exclusive content. *Just an idea, it will most likely never be done.*
-* Text wrapping for the `wp::RichText` class.
 
 ----
 
