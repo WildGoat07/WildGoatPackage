@@ -15,6 +15,7 @@ RichText::Part::Part(std::string const& str, sf::Color col1, sf::Uint32 st, sf::
 }
 RichText::RichText()
 {
+    m_textWrapping = 0;
     m_font = nullptr;
     m_size = 0;
 }
@@ -42,30 +43,101 @@ void RichText::addPart(Part const& p)
     for (int i = 0;i<subList.size();i++)
         m_parts.push_back(subList[i]);
 }
+void RichText::nextWord(std::string const& str, int& curs) const
+{
+    char oldChar = str[curs];
+    for (int i = curs+1;i<str.size();i++)
+    {
+        char newChar = str[i];
+        if ((oldChar == ' ' || oldChar == '\n' || oldChar == '\t') && (newChar != ' ' && newChar != '\n' && newChar != '\t'))
+        {
+            curs = i;
+            i = str.size();
+            return;
+        }
+        oldChar = newChar;
+    }
+    curs = str.size();
+}
 void RichText::generate()
 {
     sf::Vector2f offset;
     m_buffer.clear();
     float decal = 9999999;
+    float currLength = 0;
     for (int i = 0;i<m_parts.size();i++)
     {
-        std::shared_ptr<sf::Text> tmp(new sf::Text());
-        tmp->setString(m_parts[i].text);
-        tmp->setFillColor(m_parts[i].fillColor);
-        tmp->setOutlineColor(m_parts[i].outlineColor);
-        tmp->setOutlineThickness(m_parts[i].outlineThickness);
-        tmp->setStyle(m_parts[i].style);
-        tmp->setFont(*m_font);
-        tmp->setPosition(offset);
-        tmp->setCharacterSize(m_size);
-        if (decal > tmp->getLocalBounds().top)
-            decal = tmp->getLocalBounds().top;
-        m_buffer.push_back(tmp);
-        offset = tmp->findCharacterPos(m_parts[i].text.size());
-        if (m_parts[i].m_return)
+        std::vector<std::string> strs;
+        std::vector<bool> subReturn;
+        std::string currString;
+        int curs = 0;
+        bool fin = false;
+        bool endOfText = false;
+        while (!fin)
         {
-            offset.x = 0;
-            offset.y += m_size;
+            std::shared_ptr<sf::Text> tmp(new sf::Text());
+            std::string currWord;
+            int currPos = curs;
+            nextWord(m_parts[i].text, curs);
+            currWord = m_parts[i].text.substr(currPos, curs - currPos);
+            if (currPos == m_parts[i].text.size())
+            {
+                endOfText = true;
+            }
+
+
+
+            tmp->setString(currWord);
+            tmp->setFillColor(m_parts[i].fillColor);
+            tmp->setOutlineColor(m_parts[i].outlineColor);
+            tmp->setOutlineThickness(m_parts[i].outlineThickness);
+            tmp->setStyle(m_parts[i].style);
+            tmp->setFont(*m_font);
+            tmp->setCharacterSize(m_size);
+            currLength += tmp->getGlobalBounds().width;
+            if (currLength > m_textWrapping)
+            {
+                if (currString.size() > 0)
+                    curs = currPos;
+                else
+                    currString = currWord;
+                currLength = tmp->getGlobalBounds().width;
+                strs.push_back(currString);
+                currString = "";
+                subReturn.push_back(true);
+            }
+            else
+            {
+                currString += currWord;
+            }
+            if (endOfText)
+            {
+                subReturn.push_back(false);
+                strs.push_back(currString);
+                fin = true;
+            }
+        }
+        for (int j = 0;j<strs.size();j++)
+        {
+            std::shared_ptr<sf::Text> tmp(new sf::Text());
+            tmp->setString(strs[j]);
+            tmp->setFillColor(m_parts[i].fillColor);
+            tmp->setOutlineColor(m_parts[i].outlineColor);
+            tmp->setOutlineThickness(m_parts[i].outlineThickness);
+            tmp->setStyle(m_parts[i].style);
+            tmp->setFont(*m_font);
+            tmp->setPosition(offset);
+            tmp->setCharacterSize(m_size);
+            if (decal > tmp->getLocalBounds().top)
+                decal = tmp->getLocalBounds().top;
+            m_buffer.push_back(tmp);
+            offset = tmp->findCharacterPos(m_parts[i].text.size());
+            if (m_parts[i].m_return || subReturn[j])
+            {
+                offset.x = 0;
+                offset.y += m_size;
+                currLength = 0;
+            }
         }
     }
     for (int i = 0;i<m_buffer.size();i++)
@@ -457,4 +529,12 @@ bool RichText::loadJSON(std::string const& str)
         }
     }
     return true;
+}
+void RichText::setTextWrappingSize(float s)
+{
+    m_textWrapping = s;
+}
+float RichText::getTextWrappingSize() const
+{
+    return m_textWrapping;
 }

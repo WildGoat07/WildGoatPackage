@@ -49,8 +49,11 @@ namespace wp
         sf::Font const* m_font;
         std::vector<Part> m_parts;
         sf::Uint32 m_size;
+        float m_textWrapping;
+
         virtual void draw(sf::RenderTarget&, sf::RenderStates) const override;
         bool nextValidChar(sf::Uint16&, std::string const&, sf::Uint16&, sf::Uint16&) const;
+        void nextWord(std::string const&, int&) const;
     public:
         /** \brief Constructor.
          *
@@ -123,6 +126,8 @@ namespace wp
          *
          */
         bool loadJSON(std::string const&);
+        void setTextWrappingSize(float);
+        float getTextWrappingSize() const;
     };
 
     inline void RichText::clear()
