@@ -129,7 +129,7 @@ namespace wp
         /////////////////////////////////////////////////
                 /// \brief Sets the maximal width.
         ///
-        ///Over this width, the text will be cut, except for the words that are longer than the maximal width.
+        ///Over this width, the text will be cut, except for the words that are longer than the maximal width. Set at 0 to cancel it.
         ///
         /// \param float : maximal width.
         /// \return void

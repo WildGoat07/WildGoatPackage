@@ -67,60 +67,84 @@ void RichText::generate()
     float currLength = 0;
     for (int i = 0;i<m_parts.size();i++)
     {
-        std::vector<std::string> strs;
-        std::vector<bool> subReturn;
-        std::string currString;
-        int curs = 0;
-        bool fin = false;
-        bool endOfText = false;
-        while (!fin)
+        if (m_textWrapping == 0)
         {
-            std::shared_ptr<sf::Text> tmp(new sf::Text());
-            std::string currWord;
-            int currPos = curs;
-            nextWord(m_parts[i].text, curs);
-            currWord = m_parts[i].text.substr(currPos, curs - currPos);
-            if (currPos == m_parts[i].text.size())
+            std::vector<std::string> strs;
+            std::vector<bool> subReturn;
+            std::string currString;
+            int curs = 0;
+            bool fin = false;
+            bool endOfText = false;
+            while (!fin)
             {
-                endOfText = true;
-            }
+                std::shared_ptr<sf::Text> tmp(new sf::Text());
+                std::string currWord;
+                int currPos = curs;
+                nextWord(m_parts[i].text, curs);
+                currWord = m_parts[i].text.substr(currPos, curs - currPos);
+                if (currPos == m_parts[i].text.size())
+                {
+                    endOfText = true;
+                }
 
 
 
-            tmp->setString(currWord);
-            tmp->setFillColor(m_parts[i].fillColor);
-            tmp->setOutlineColor(m_parts[i].outlineColor);
-            tmp->setOutlineThickness(m_parts[i].outlineThickness);
-            tmp->setStyle(m_parts[i].style);
-            tmp->setFont(*m_font);
-            tmp->setCharacterSize(m_size);
-            currLength += tmp->getGlobalBounds().width;
-            if (currLength > m_textWrapping)
-            {
-                if (currString.size() > 0)
-                    curs = currPos;
+                tmp->setString(currWord);
+                tmp->setFillColor(m_parts[i].fillColor);
+                tmp->setOutlineColor(m_parts[i].outlineColor);
+                tmp->setOutlineThickness(m_parts[i].outlineThickness);
+                tmp->setStyle(m_parts[i].style);
+                tmp->setFont(*m_font);
+                tmp->setCharacterSize(m_size);
+                currLength += tmp->getGlobalBounds().width;
+                if (currLength > m_textWrapping)
+                {
+                    if (currString.size() > 0)
+                        curs = currPos;
+                    else
+                        currString = currWord;
+                    currLength = tmp->getGlobalBounds().width;
+                    strs.push_back(currString);
+                    currString = "";
+                    subReturn.push_back(true);
+                }
                 else
-                    currString = currWord;
-                currLength = tmp->getGlobalBounds().width;
-                strs.push_back(currString);
-                currString = "";
-                subReturn.push_back(true);
+                {
+                    currString += currWord;
+                }
+                if (endOfText)
+                {
+                    subReturn.push_back(false);
+                    strs.push_back(currString);
+                    fin = true;
+                }
             }
-            else
+            for (int j = 0;j<strs.size();j++)
             {
-                currString += currWord;
-            }
-            if (endOfText)
-            {
-                subReturn.push_back(false);
-                strs.push_back(currString);
-                fin = true;
+                std::shared_ptr<sf::Text> tmp(new sf::Text());
+                tmp->setString(strs[j]);
+                tmp->setFillColor(m_parts[i].fillColor);
+                tmp->setOutlineColor(m_parts[i].outlineColor);
+                tmp->setOutlineThickness(m_parts[i].outlineThickness);
+                tmp->setStyle(m_parts[i].style);
+                tmp->setFont(*m_font);
+                tmp->setPosition(offset);
+                tmp->setCharacterSize(m_size);
+                if (decal > tmp->getLocalBounds().top)
+                    decal = tmp->getLocalBounds().top;
+                m_buffer.push_back(tmp);
+                offset = tmp->findCharacterPos(m_parts[i].text.size());
+                if (m_parts[i].m_return || subReturn[j])
+                {
+                    offset.x = 0;
+                    offset.y += m_size;
+                }
             }
         }
-        for (int j = 0;j<strs.size();j++)
+        else
         {
             std::shared_ptr<sf::Text> tmp(new sf::Text());
-            tmp->setString(strs[j]);
+            tmp->setString(m_parts[i].text);
             tmp->setFillColor(m_parts[i].fillColor);
             tmp->setOutlineColor(m_parts[i].outlineColor);
             tmp->setOutlineThickness(m_parts[i].outlineThickness);
@@ -132,11 +156,10 @@ void RichText::generate()
                 decal = tmp->getLocalBounds().top;
             m_buffer.push_back(tmp);
             offset = tmp->findCharacterPos(m_parts[i].text.size());
-            if (m_parts[i].m_return || subReturn[j])
+            if (m_parts[i].m_return)
             {
                 offset.x = 0;
                 offset.y += m_size;
-                currLength = 0;
             }
         }
     }
