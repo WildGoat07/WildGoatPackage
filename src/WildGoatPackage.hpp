@@ -31,6 +31,10 @@
 #include "lightManager/LightManager.hpp"
 #include "pathFinding/PathFinder.hpp"
 #include "pathFinding/TilePathFinder.hpp"
+#include "SoundManager/Channel.hpp"
+#include "SoundManager/Module.hpp"
+#include "SoundManager/Music.hpp"
+#include "SoundManager/Sound.hpp"
 
 
 #endif // DEF_WILDGOATPACKAGE_HPP
