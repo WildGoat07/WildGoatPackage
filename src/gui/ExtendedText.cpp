@@ -55,3 +55,9 @@ void Extendedtext::setMaximalWidth(float w)
 {
     m_textBuff.setTextWrappingSize(w);
 }
+int Extendedtext::getPointedPixelPart(sf::Vector2i pt) const
+{
+    sf::Vector2f tmp(pt.x, pt.y);
+    tmp = getInverseTransform().transformPoint(tmp);
+    return m_textBuff.getPointedPart(tmp);
+}

@@ -125,7 +125,7 @@ sf::FloatRect BaseWidget::getGlobalBounds() const
 {
     return getTransform().transformRect(getLocalBounds());
 }
-void BaseWidget::setRelativeTo(sf::Vector2f pos, BaseWidget const* widg, int mode)
+void BaseWidget::setRelativeTo(BaseWidget const* widg, sf::Vector2f pos, int mode)
 {
     m_relativePos = pos;
     m_relativeTo = widg;

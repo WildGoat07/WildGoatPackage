@@ -54,6 +54,16 @@ namespace wp
             ///
             /////////////////////////////////////////////////
             void setMaximalWidth(float);
+            /////////////////////////////////////////////////
+                        /// \brief Returns the index of the part on which a pixel is on.
+            ///
+            ///For more informations, see wp::RichText::getPointedPart().
+            ///
+            /// \param sf::Vector2i : the pixel of the window.
+            /// \return int : the index of the part.
+            ///
+            /////////////////////////////////////////////////
+            int getPointedPixelPart(sf::Vector2i) const;
         };
     }
 }

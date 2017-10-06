@@ -27,6 +27,7 @@ namespace wp
             friend RichText;
         private:
             bool m_return;
+            int m_index;
         public:
             std::string text;/**< the text of the part */
             sf::Color fillColor;/**< the fill color of the text */
@@ -46,10 +47,12 @@ namespace wp
         };
     private:
         std::vector<std::shared_ptr<sf::Text> > m_buffer;
+        std::vector<int > m_indexs;
         sf::Font const* m_font;
         std::vector<Part> m_parts;
         sf::Uint32 m_size;
-        float m_textWrapping;
+        float m_textWrapping = 0;
+        int m_index = 0;
 
         virtual void draw(sf::RenderTarget&, sf::RenderStates) const override;
         bool nextValidChar(sf::Uint16&, std::string const&, sf::Uint16&, sf::Uint16&) const;
@@ -143,12 +146,23 @@ namespace wp
         ///
         /////////////////////////////////////////////////
         float getTextWrappingSize() const;
+        /////////////////////////////////////////////////
+                /// \brief Returns the index of the part on which the point given is on.
+        ///
+        ///The index of the part starts to 0. Every new part added increments the index. Returns -1 if the point isn't on any text. Useful to test if the point is on the text (not only its bounding box with getGlobalBounds() ).
+        ///
+        /// \param sf::Vector2f : point.
+        /// \return int : index of the part.
+        ///
+        /////////////////////////////////////////////////
+        int getPointedPart(sf::Vector2f) const;
     };
 
     inline void RichText::clear()
     {
         m_parts.clear();
         m_buffer.clear();
+        m_index = 0;
     }
     inline void RichText::setFont(sf::Font const& f)
     {

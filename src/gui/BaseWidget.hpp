@@ -85,13 +85,13 @@ namespace wp
             ///
             ///To stop the widget to be relative to another one, sets the second parameter to NULL.
             ///
-            /// \param sf::Vector2f : offset position.
             /// \param const* BaseWidget : relative to this widget (NULL to cancel).
+            /// \param sf::Vector2f : offset position (Optional).
             /// \param int : the mode of relative position (bottom left by default) (Optional).
             /// \return void
             ///
             /////////////////////////////////////////////////
-            void setRelativeTo(sf::Vector2f, BaseWidget const*, int = 2);
+            void setRelativeTo(BaseWidget const*, sf::Vector2f = sf::Vector2f(), int = 2);
             /////////////////////////////////////////////////
                         /// \brief Sets the window on which is drawn the widget.
             ///

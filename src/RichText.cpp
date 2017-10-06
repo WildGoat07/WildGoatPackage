@@ -23,6 +23,8 @@ void RichText::addPart(Part const& p)
 {
     std::vector<Part> subList;
     Part tmp = p;
+    tmp.m_index = m_index;
+    m_index++;
     tmp.text = "";
     for (int i = 0;i<p.text.size();i++)
     {
@@ -67,7 +69,7 @@ void RichText::generate()
     float currLength = 0;
     for (int i = 0;i<m_parts.size();i++)
     {
-        if (m_textWrapping == 0)
+        if (m_textWrapping != 0)
         {
             std::vector<std::string> strs;
             std::vector<bool> subReturn;
@@ -133,6 +135,7 @@ void RichText::generate()
                 if (decal > tmp->getLocalBounds().top)
                     decal = tmp->getLocalBounds().top;
                 m_buffer.push_back(tmp);
+                m_indexs.push_back(m_parts[i].m_index);
                 offset = tmp->findCharacterPos(m_parts[i].text.size());
                 if (m_parts[i].m_return || subReturn[j])
                 {
@@ -560,4 +563,14 @@ void RichText::setTextWrappingSize(float s)
 float RichText::getTextWrappingSize() const
 {
     return m_textWrapping;
+}
+int RichText::getPointedPart(sf::Vector2f pt) const
+{
+    pt = getInverseTransform().transformPoint(pt);
+    for (int i = 0;i<m_buffer.size();i++)
+    {
+        if (m_buffer[i]->getGlobalBounds().contains(pt))
+            return m_indexs[i];
+    }
+    return -1;
 }
