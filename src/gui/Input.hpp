@@ -23,11 +23,15 @@ namespace wp
             bool m_password = false;
             bool m_pressed = false;
             bool m_selected = false;
+            bool m_clickDown = false;
             int m_cursPos;
+            int m_startingCursPos;
             std::string m_text;
             std::string m_defaultText;
             float m_minLength;
             sf::Clock m_internClock;
+            sf::RectangleShape m_beam;
+
             virtual void draw(sf::RenderTarget&, sf::RenderStates) const override;
             virtual sf::FloatRect _getHitbox() const override;
             virtual void _implUpdate() override;
@@ -123,6 +127,26 @@ namespace wp
             ///
             /////////////////////////////////////////////////
             void setDefauitText(std::string const&);
+            /////////////////////////////////////////////////
+                        /// \brief Get the highlighted text.
+            ///
+            ///The highlighted text is the selection with a *click & drag* move with the mouse.
+            ///
+            /// \return std::string : highlighted text.
+            ///
+            /////////////////////////////////////////////////
+            std::string getHighlightedText() const;
+            /////////////////////////////////////////////////
+                        /// \brief Sets the position of the cursor.
+            ///
+            ///If the new position of the cursor is higher than the length of the text, it will be at the back of the text. You can set the second cursor (the one to highlight the text) to -1 to not cancel the selection.
+            ///
+            /// \param int unsigned : cursor position.
+            /// \param int : highlight cursor position (Optional).
+            /// \return void
+            ///
+            /////////////////////////////////////////////////
+            void setCursorPosition(unsigned int, int = -1);
 
         };
         static const Event INPUT_TEXT_CHANGED = Event(22);

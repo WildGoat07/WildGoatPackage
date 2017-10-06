@@ -21,6 +21,8 @@ Input::Input(Resource& res)
 
     m_lines.append(sf::Vertex(sf::Vector2f()));
     m_lines.append(sf::Vertex(sf::Vector2f()));
+
+    m_beam.setFillColor(background_c);
 }
 void Input::_implUpdate()
 {
@@ -69,6 +71,8 @@ void Input::_implUpdate()
 
     m_lines[8].position = sf::Vector2f(_getTextWidth(m_cursPos) - 0.5, 0.5 - m_res->textSize*0.2) + off;
     m_lines[9].position = sf::Vector2f(_getTextWidth(m_cursPos) - 0.5, m_res->textSize*1.2 - 0.5) + off;
+    m_beam.setPosition(sf::Vector2f(_getTextWidth(std::min(m_startingCursPos, m_cursPos)) - 0.5, 0.5 - m_res->textSize*0.2) + off);
+    m_beam.setSize(sf::Vector2f(_getTextWidth(std::max(m_startingCursPos, m_cursPos)) - 0.5  - m_beam.getPosition().x, 0.5 - m_res->textSize*0.2 + off.y) + off);
     if ((m_internClock.getElapsedTime().asMilliseconds()%m_beamFreq.asMilliseconds()) < m_beamFreq.asMilliseconds()/2 && m_selected)
     {
         m_lines[8].color = textColor;
@@ -98,7 +102,7 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
     else
         m_pressed = false;
 
-    if (newEv == MOUSE_LEFT_CLIC)
+    if (m_clickDown)
     {
         m_selected = true;
         m_internClock.restart();
@@ -120,6 +124,30 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
         m_cursPos = min;
         newEv += INPUT_GOT_FOCUS;
     }
+    if (ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Left)
+        m_clickDown = false;
+    if (newEv == MOUSE_BUTTON_LEFT_DOWN)
+    {
+        m_clickDown = true;
+        m_internClock.restart();
+        int min = m_text.size();
+        for (int i = 0;i<m_text.size();i++)
+        {
+            if (_getTextWidth(i) > relativePos.x)
+            {
+                min = i;
+                i = m_text.size();
+            }
+        }
+        if (min > 0)
+        {
+            int max = min-1;
+            if (std::abs(_getTextWidth(min) - relativePos.x) > std::abs(_getTextWidth(max) - relativePos.x))
+                min = max;
+        }
+        m_cursPos = min;
+        m_startingCursPos = min;
+    }
     if (ev.type == sf::Event::MouseButtonPressed && ev.mouseButton.button == sf::Mouse::Left && !_getHitbox().contains(mousePos))
     {
         if (m_selected)
@@ -136,18 +164,27 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
             if (carac == 127);
             else if (carac == 8);   //forbidden char
             else if (carac == 22);
+            else if (carac == 3);
             else if (!m_numOnly)
             {
+                m_text.erase(m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos));
+                m_cursPos = std::min(m_startingCursPos, m_cursPos);
+                m_startingCursPos = m_cursPos;
                 m_text.insert(m_text.begin() + m_cursPos, carac);
                 m_cursPos++;
+                m_startingCursPos = m_cursPos;
                 newEv += INPUT_TEXT_CHANGED;
             }
             else
             {
                 if ((carac >= '0' && carac <= '9') || carac == '.' || carac == 'e' || carac == '+' || carac == '-')
                 {
+                    m_text.erase(m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos));
+                    m_cursPos = std::min(m_startingCursPos, m_cursPos);
+                    m_startingCursPos = m_cursPos;
                     m_text.insert(m_text.begin() + m_cursPos, carac);
                     m_cursPos++;
+                    m_startingCursPos = m_cursPos;
                     newEv += INPUT_TEXT_CHANGED;
                 }
             }
@@ -162,80 +199,100 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
             }
             if (ev.key.code == sf::Keyboard::BackSpace)
             {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
+                if (m_startingCursPos == m_cursPos)
                 {
-                    std::string::iterator begin = m_text.begin() + m_cursPos;
-                    char oldChar = m_text[m_cursPos-1];
-                    int newPos = m_cursPos;
-                    for (int i = m_cursPos-1;i>=0;i--)
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
                     {
-                        char newChar = m_text[i];
-                        if (oldChar == ' ')
+                        std::string::iterator begin = m_text.begin() + m_cursPos;
+                        char oldChar = m_text[m_cursPos-1];
+                        int newPos = m_cursPos;
+                        for (int i = m_cursPos-1;i>=0;i--)
                         {
-                            begin = m_text.begin() + i;
-                            newPos = i;
-                        }
-                        else
-                        {
-                            if (newChar != ' ')
+                            char newChar = m_text[i];
+                            if (oldChar == ' ')
                             {
                                 begin = m_text.begin() + i;
                                 newPos = i;
                             }
                             else
                             {
-                                i = 0;
+                                if (newChar != ' ')
+                                {
+                                    begin = m_text.begin() + i;
+                                    newPos = i;
+                                }
+                                else
+                                {
+                                    i = 0;
+                                }
                             }
+
+
+                            oldChar = newChar;
                         }
-
-
-                        oldChar = newChar;
+                        m_text.erase(begin, m_text.begin() + m_cursPos);
+                        m_cursPos = newPos;
+                        newEv += INPUT_TEXT_CHANGED;
                     }
-                    m_text.erase(begin, m_text.begin() + m_cursPos);
-                    m_cursPos = newPos;
-                    newEv += INPUT_TEXT_CHANGED;
+                    else
+                    {
+                        if (m_cursPos > 0)
+                        {
+                            m_text.erase(m_text.begin() + m_cursPos-1, m_text.begin() + m_cursPos);
+                            m_cursPos--;
+                            newEv += INPUT_TEXT_CHANGED;
+                        }
+                    }
+                    m_startingCursPos = m_cursPos;
                 }
                 else
                 {
-                    if (m_cursPos > 0)
-                    {
-                        m_text.erase(m_text.begin() + m_cursPos-1, m_text.begin() + m_cursPos);
-                        m_cursPos--;
-                        newEv += INPUT_TEXT_CHANGED;
-                    }
+                    m_text.erase(m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos));
+                    m_cursPos = std::min(m_startingCursPos, m_cursPos);
+                    m_startingCursPos = m_cursPos;
                 }
             }
             if (ev.key.code == sf::Keyboard::Delete)
             {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
+                if (m_startingCursPos == m_cursPos)
                 {
-                    std::string::iterator end = m_text.end();
-                    char oldChar = m_text[m_cursPos];
-                    for (int i = m_cursPos+1;i<m_text.size();i++)
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
                     {
-                        char newChar = m_text[i];
-                        if (oldChar == ' ' && newChar != ' ')
+                        std::string::iterator end = m_text.end();
+                        char oldChar = m_text[m_cursPos];
+                        for (int i = m_cursPos+1;i<m_text.size();i++)
                         {
-                            i = m_text.size();
-                        }
-                        else
-                        {
-                            end = m_text.begin() + i + 1;
-                        }
+                            char newChar = m_text[i];
+                            if (oldChar == ' ' && newChar != ' ')
+                            {
+                                i = m_text.size();
+                            }
+                            else
+                            {
+                                end = m_text.begin() + i + 1;
+                            }
 
 
-                        oldChar = newChar;
+                            oldChar = newChar;
+                        }
+                        m_text.erase(m_text.begin() + m_cursPos, end);
+                        newEv += INPUT_TEXT_CHANGED;
                     }
-                    m_text.erase(m_text.begin() + m_cursPos, end);
-                    newEv += INPUT_TEXT_CHANGED;
+                    else
+                    {
+                        if (m_cursPos < m_text.size())
+                        {
+                            m_text.erase(m_text.begin() + m_cursPos, m_text.begin() + m_cursPos+1);
+                            newEv += INPUT_TEXT_CHANGED;
+                        }
+                    }
+                    m_startingCursPos = m_cursPos;
                 }
                 else
                 {
-                    if (m_cursPos < m_text.size())
-                    {
-                        m_text.erase(m_text.begin() + m_cursPos, m_text.begin() + m_cursPos+1);
-                        newEv += INPUT_TEXT_CHANGED;
-                    }
+                    m_text.erase(m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos));
+                    m_cursPos = std::min(m_startingCursPos, m_cursPos);
+                    m_startingCursPos = m_cursPos;
                 }
             }
             if (ev.key.code == sf::Keyboard::Left)
@@ -271,6 +328,8 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
                         m_internClock.restart();
                     }
                 }
+                if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && !sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+                    m_startingCursPos = m_cursPos;
             }
             if (ev.key.code == sf::Keyboard::Right)
             {
@@ -305,13 +364,28 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
                         m_internClock.restart();
                     }
                 }
+                if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && !sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+                    m_startingCursPos = m_cursPos;
             }
             if (ev.key.code == sf::Keyboard::V && (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
             {
                 std::string str = Various::getClipboardContent();
+                m_text.erase(m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos));
+                m_cursPos = std::min(m_startingCursPos, m_cursPos);
+                m_startingCursPos = m_cursPos;
                 m_text.insert(m_text.begin() + m_cursPos, str.begin(), str.end());
                 m_cursPos += str.size();
                 newEv += INPUT_TEXT_CHANGED;
+                m_startingCursPos = m_cursPos;
+            }
+            if (ev.key.code == sf::Keyboard::C && (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
+            {
+                if (!m_password)
+                {
+                    std::string str(m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos));
+                    if (str.size() > 0)
+                        wp::Various::copyToClipboard(str);
+                }
             }
         }
     }
@@ -342,6 +416,7 @@ void Input::draw(sf::RenderTarget& target, sf::RenderStates states) const
     sf::Transform tr = getTransform();
     target.draw(m_rectangle, tr);
     target.draw(m_lines, tr);
+    target.draw(m_beam, tr);
     target.draw(m_textBuff, tr);
     target.setView(view);
 }
@@ -388,4 +463,16 @@ void Input::setSelected(bool s)
 void Input::setDefauitText(std::string const& str)
 {
     m_defaultText = str;
+}
+std::string Input::getHighlightedText() const
+{
+    return std::string()m_text.begin() + std::min(m_cursPos, m_startingCursPos), m_text.begin() + std::max(m_cursPos, m_startingCursPos);
+}
+void Input::setCursorPosition(unsigned int p1, int p2)
+{
+    m_cursPos = std::min(m_text.size(), p1);
+    if (p2 == -1)
+        m_startingCursPos = p1;
+    else
+        m_startingCursPos = std::min(m_text.size(), p2);
 }
