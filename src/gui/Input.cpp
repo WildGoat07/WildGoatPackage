@@ -33,6 +33,17 @@ void Input::_implUpdate()
     }
     else
         m_textBuff.setString(m_text);
+    if (m_text.size() == 0)
+    {
+        m_textBuff.setStyle(sf::Text::Italic);
+        m_textBuff.setString(m_defaultText);
+        m_textBuff.setFillColor(border);
+    }
+    else
+    {
+        m_textBuff.setStyle(sf::Text::Regular);
+        m_textBuff.setFillColor(textColor);
+    }
     sf::Vector2f size;
     size.x = m_textBuff.getGlobalBounds().width + m_res->textSize*0.8;
     size.y = m_res->textSize*1.8;
@@ -373,4 +384,8 @@ bool Input::isSelected() const
 void Input::setSelected(bool s)
 {
     m_selected = s;
+}
+void Input::setDefauitText(std::string const& str)
+{
+    m_defaultText = str;
 }

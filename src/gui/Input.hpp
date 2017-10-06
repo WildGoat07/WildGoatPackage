@@ -25,6 +25,7 @@ namespace wp
             bool m_selected = false;
             int m_cursPos;
             std::string m_text;
+            std::string m_defaultText;
             float m_minLength;
             sf::Clock m_internClock;
             virtual void draw(sf::RenderTarget&, sf::RenderStates) const override;
@@ -112,6 +113,17 @@ namespace wp
             ///
             /////////////////////////////////////////////////
             void setMinimumLength(float);
+            /////////////////////////////////////////////////
+                        /// \brief Sets th default text which will be displayed.
+            ///
+            ///The default text is the one displayed when there is NO text entered.
+            ///
+            /// \param const& std::string : default text.
+            /// \return void
+            ///
+            /////////////////////////////////////////////////
+            void setDefauitText(std::string const&);
+
         };
         static const Event INPUT_TEXT_CHANGED = Event(22);
         static const Event INPUT_TEXT_RETURNED = Event(23);

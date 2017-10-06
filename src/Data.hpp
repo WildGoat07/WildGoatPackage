@@ -8,11 +8,11 @@ namespace wp
 {
     /** \brief Storage class.
     *
-    *   Stores any given number or string to save and load them.
+    *   Stores any given number or string to save and load them. **DEPRECATED**, use the JSON module instead which is more portable and more structured.
     *
     *   \class Data
      */
-    class Data
+    class SFML_DEPRECATED Data
     {
         public:
             /** \brief Handles numeric and string value

@@ -1,5 +1,7 @@
 ![img](https://github.com/WildGoat07/WildGoatPackage-Release/blob/master/logo%20x256.png)
-# WildGoatPackage
+
+# WildGoatPackage v1.3.0
+
 A little project i'm working on. Provides some helpful user friendly classes.<br/>**Requires [SFML](https://www.sfml-dev.org/index.php) for the graphic classes**.<br/>**Works only on Windows at the moment**.
 
 ## Features
@@ -12,7 +14,7 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 * `wp::Chrono` : A `sf::Clock` which can be paused or set its actual time.
 * `wp::Color` : A fast way to convert HSLA / CMYKA / RBGA colors.
 * `wp::Cursor` : An easy interface to change the mouse cursor (**Windows only**).
-* `wp::Data` : A class that can store referenced values (`int`, `double`, or `std::string`) and save/load them.
+* `wp::Data` : A class that can store referenced values (`int`, `double`, or `std::string`) and save/load them. **DEPRECATED**.
 * `wp::Extractor` : A class used to extract archives done by `wp::Archive`.
 * `wp::File` : A class to extract basic informations from a file path (name, extension, path, or absolute path for relative ones).
 * `wp::FileManager` : A fast and easy way to explore files using C++.
@@ -21,9 +23,10 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 * `wp::gui` : A module to create an user interface in SFML. Based on [SFGUI](https://github.com/TankOs/SFGUI).
 * `wp::JSON` : A module to parse a JSON formatted string or generate one and do whatever you want with it.
 * `wp::light` : A module to create lights in SFML and generate shadows based on walls.
-* `wp::Matrix` : Just a class to handle 2 dimensionnal matrix with basic operators(+, -, *) and some functions to get the inverse, minor, adjugate, ...
-* `wp::pf` : short for *path finding*, a module with a path finding algorithm based on nodes or a tilemap. The algorithm used is the A* for optimal results and a high heuristic to always give the shortest path possible. 
+* `wp::Matrix` : Just a class to handle 2 dimensionnal matrix with basic operators(+, -, \*) and some functions to get the inverse, minor, adjugate, ...
+* `wp::pf` : short for *path finding*, a module with a path finding algorithm based on nodes or a tilemap. The algorithm used is the A\* for optimal results and a high heuristic to always give the shortest path possible. 
 * `wp::RichText` : A class that can display text (like `sf::Text`) but with different colors/style in only one object (which can't be made using only one `sf::Text`). Supports JSON.
+* `wp::snd` : a namespace where you can manage mutiple sounds and musics using channels.
 * `wp::StandardInputStream` : A class to link a standard `std::iostream` to a `sf::InputStream`. 
 * `wp::Variable` : A dynamic variable that can have either a constant value (still variable though) or a reference to another one inside a list of parameters. *Same as `wp::Function`, it's useless at the moment*.
 * `wp::Various` : A bunch of various functions, such as a int to string converter (and string to int), a crypter (and uncrypter), calculate a vector's angle, some interpolations and way more (**Windows only**).
@@ -33,8 +36,10 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 
 * A wiki !! And some examples.
 * More portability, can be used without SFML or Windows but without its exclusive content. *Just an idea, it will most likely never be done.*
+* `wp::RichText::getSelectedPart()` : returns the index of the part on which a point is on.
+* `wp::DataBase` : A new alternative to the poorly designed `wp::Data`, will be structured as a data base with requests.
 
-----
+---
 
 Developper : HANEN Nathan - aka WildGoat07
 
