@@ -43,10 +43,12 @@ namespace wp
     ///
     ///\class Extractor
     /////////////////////////////////////////////////
-    class Extractor
+    class Extractor : public sf::InputStream, public sf::NonCopyable
     {
         std::map<uint64_t, uint64_t> m_map;
         std::ifstream m_file;
+        sf::Uint64 m_offset;
+        uint64_t m_selection;
     public:
         /////////////////////////////////////////////////
                 /// \brief Opens an archive.
@@ -59,26 +61,26 @@ namespace wp
         /////////////////////////////////////////////////
         bool open(std::string const&);
         /////////////////////////////////////////////////
-                /// \brief Returns a stream to the file.
+                /// \brief Selects the file.
         ///
-        ///The stream to the archive correspond to the desired id. Be careful ! Every time you call this function, the older given stream will change because it is the internal stream. Also, the given stream must **NOT** change !
-        ///
-        /// \param uint64_t : id of the file.
-        /// \param uint64_t* : were the size of the file will be stored. (Optional)
-        /// \return std::istream& : stream.
-        ///
-        /////////////////////////////////////////////////
-        std::istream& getFile(uint64_t, uint64_t* = nullptr);
-        /////////////////////////////////////////////////
-                /// \brief Returns a stream to the file as a sf::InputStream.
-        ///
-        ///The stream to the archive correspond to the desired id. Be careful ! Every time you call this function, the older given stream will change because it is the internal stream. Also, the given stream must **NOT** change !
+        ///The selected file will be the one read. Returns false if the id isn't found. In this case, the selected file won't change.
         ///
         /// \param uint64_t : id of the file.
-        /// \return wp::StandardInputStream : stream.
+        /// \return bool : true if succeed.
         ///
         /////////////////////////////////////////////////
-        StandardInputStream getFileAsSfStream(uint64_t);
+        bool select(uint64_t);
+        /////////////////////////////////////////////////
+                /// \brief Returns the id of the selected file.
+        ///
+        /// \return uint64_t : id of the file.
+        ///
+        /////////////////////////////////////////////////
+        uint64_t getSelectedFile() const;
+        virtual sf::Int64 read(void*, sf::Int64) override;
+        virtual sf::Int64 seek(sf::Int64) override;
+        virtual sf::Int64 tell() override;
+        virtual sf::Int64 getSize() override;
     };
 }
 

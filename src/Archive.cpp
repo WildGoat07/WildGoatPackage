@@ -56,7 +56,7 @@ bool Extractor::open(std::string const& strFile)
         m_map[id] = size;
     }
 }
-std::istream& Extractor::getFile(uint64_t id, uint64_t* size)
+bool Extractor::select(uint64_t id)
 {
     uint64_t start = 4 + 8*m_map.size();
     for (std::map<uint64_t, uint64_t>::iterator it = m_map.begin();it!=m_map.end();it++)
@@ -66,16 +66,45 @@ std::istream& Extractor::getFile(uint64_t id, uint64_t* size)
             if (size != nullptr)
             *size = it->second;
             m_file.seekg(start);
-            return m_file;
+            m_offset = start;
+            m_selection = id;
+            return true;
         }
         else
             start += it->second;
     }
+    return false;
 }
-StandardInputStream Extractor::getFileAsSfStream(uint64_t id)
+sf::Int64 Extractor::read(void* ptr, sf::Int64 size)
 {
-    uint64_t size;
-    std::istream& tmp(this->getFile(id, &size));
-    StandardInputStream stream(tmp, size, tmp.tellg());
-    return stream;
+    sf::Int64 bytesRead = 0;
+    for (sf::Int64 i = 0;i<size;i++)
+    {
+        char carac;
+        if (m_file->get(carac))
+        {
+            ((char*)ptr)[bytesRead] = carac;
+            bytesRead++;
+        }
+        else
+            return bytesRead;
+    }
+    return bytesRead;
+}
+sf::Int64 Extractor::seek(sf::Int64 position)
+{
+    m_file->seekg(position + m_offset);
+    return m_file->tellg();
+}
+sf::Int64 Extractor::tell()
+{
+    return m_file->tellg() - m_offset;
+}
+sf::Int64 Extractor::getSize()
+{
+    return m_map[m_selection];
+}
+uint64_t Extractor::getSelectedFile() const
+{
+    return m_selection;
 }

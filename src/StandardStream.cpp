@@ -6,7 +6,7 @@ void StandardInputStream::setStream(std::istream& stream, size_t size, size_t of
 {
     m_offset = offset;
     m_stream = &stream;
-    m_streamSize = size;
+    m_streamSize = size - offset;
 }
 
 std::istream& StandardInputStream::getStream()
