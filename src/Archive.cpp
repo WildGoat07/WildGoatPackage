@@ -63,8 +63,6 @@ bool Extractor::select(uint64_t id)
     {
         if (it->first == id)
         {
-            if (size != nullptr)
-            *size = it->second;
             m_file.seekg(start);
             m_offset = start;
             m_selection = id;
@@ -81,8 +79,9 @@ sf::Int64 Extractor::read(void* ptr, sf::Int64 size)
     for (sf::Int64 i = 0;i<size;i++)
     {
         char carac;
-        if (m_file->get(carac))
+        if (tell() < getSize())
         {
+            m_file.get(carac);
             ((char*)ptr)[bytesRead] = carac;
             bytesRead++;
         }
@@ -93,12 +92,12 @@ sf::Int64 Extractor::read(void* ptr, sf::Int64 size)
 }
 sf::Int64 Extractor::seek(sf::Int64 position)
 {
-    m_file->seekg(position + m_offset);
-    return m_file->tellg();
+    m_file.seekg(position + m_offset);
+    return tell();
 }
 sf::Int64 Extractor::tell()
 {
-    return m_file->tellg() - m_offset;
+    return m_file.tellg() - m_offset;
 }
 sf::Int64 Extractor::getSize()
 {
