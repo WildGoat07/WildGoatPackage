@@ -77,6 +77,13 @@ namespace wp
         ///
         /////////////////////////////////////////////////
         uint64_t getSelectedFile() const;
+        /////////////////////////////////////////////////
+                /// \brief Returns the id of all the stored files.
+        ///
+        /// \return std::vector<uint64_t> : table of all the ids.
+        ///
+        /////////////////////////////////////////////////
+        std::vector<uint64_t> getIds() const;
         virtual sf::Int64 read(void*, sf::Int64) override;
         virtual sf::Int64 seek(sf::Int64) override;
         virtual sf::Int64 tell() override;

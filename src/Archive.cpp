@@ -107,3 +107,12 @@ uint64_t Extractor::getSelectedFile() const
 {
     return m_selection;
 }
+std::vector<uint64_t> Extractor::getIds() const
+{
+    std::vector<uint64_t> result;
+    for (auto it = m_map.begin();it != m_map.end();it++)
+    {
+        result.push_back(it->first);
+    }
+    return result;
+}
