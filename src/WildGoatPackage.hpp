@@ -1,10 +1,6 @@
 #ifndef DEF_WILDGOATPACKAGE_HPP
 #define DEF_WILDGOATPACKAGE_HPP
 
-#define WP_VERSION_MAJOR 1
-#define WP_VERSION_MINOR 3
-#define WP_VERSION_PATCH 4
-
 #include "Matrix.hpp"
 #include "Various.hpp"
 #include "Chrono.hpp"

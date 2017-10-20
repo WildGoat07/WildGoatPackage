@@ -1,1 +1,4 @@
-wpGuiFont RCDATA "WildGoatPackage/rc/Ubuntu.ttf"
+
+
+wpGuiFont RCDATA /*if there is an error there, put the folder where the sources of the WGP are*/ "WildGoatPackage"
+                                                                                                "/rc/Ubuntu.ttf"
