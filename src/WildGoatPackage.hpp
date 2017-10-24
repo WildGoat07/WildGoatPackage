@@ -21,6 +21,7 @@
 #include "Variable.hpp"
 #include "Archive.hpp"
 #include "StandardStream.hpp"
+#include "KeySet.hpp"
 
 #include "gui/gui.hpp"
 #include "JSON/JSON.hpp"
