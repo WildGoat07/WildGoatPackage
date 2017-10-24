@@ -20,6 +20,7 @@ namespace wp
         {
             friend PathFinder;
         protected:
+            float m_heuristic;
             float m_cost;
             std::vector<Node*> m_path;
             struct leftSupRight
@@ -33,7 +34,6 @@ namespace wp
         public:
 
             friend PathFinder;
-            float m_heuristic;
 
             sf::Vector2f nodePosition;///< the real position of the node.
             std::vector<Node*> adjacent;///< all the nodes linked to it.
