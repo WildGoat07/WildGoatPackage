@@ -9,7 +9,7 @@ namespace wp
         /////////////////////////////////////////////////
                 /// \brief Base resource.
         ///
-        ///Needed by all widget. Create on per application and create any widget out of it.
+        ///Needed by all widget. Create one per application and create any widget out of it.
         ///
         ///\class Resource
         /////////////////////////////////////////////////
