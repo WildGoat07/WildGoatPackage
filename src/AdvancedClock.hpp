@@ -13,29 +13,29 @@ namespace wp
     class AdvancedClock : public Chrono
     {
     private:
-        double m_factor = 1;
-        void update() const;
+        float m_factor = 1;
+        virtual void update() const override;
     public:
         /** \brief Sets the time factor.
          *
-         * \param double : time factor.
+         * \param float : time factor.
          * \return void
          *
          */
-        void setFactor(double);
+        void setFactor(float);
         /** \brief Returns the time factor.
          *
-         * \return double : time factor.
+         * \return float : time factor.
          *
          */
-        double getFactor() const;
+        float getFactor() const;
     };
-        inline void AdvancedClock::setFactor(double f)
+        inline void AdvancedClock::setFactor(float f)
         {
             update();
             m_factor = f;
         }
-        inline double AdvancedClock::getFactor() const
+        inline float AdvancedClock::getFactor() const
         {
             return m_factor;
         }

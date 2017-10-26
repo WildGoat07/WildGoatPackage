@@ -17,7 +17,7 @@ namespace wp
         mutable sf::Time m_time;
         mutable sf::Clock m_chrono;
         bool m_paused = false;
-        void update() const;
+        virtual void update() const;
     public:
         /** \brief Sets The current timer.
          *
