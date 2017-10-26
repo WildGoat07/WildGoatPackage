@@ -165,6 +165,7 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
             else if (carac == 8);   //forbidden char
             else if (carac == 22);
             else if (carac == 3);
+            else if (carac == 1);
             else if (carac == 24);
             else if (!m_numOnly)
             {
@@ -231,6 +232,11 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
 
                             oldChar = newChar;
                         }
+                        if (m_password)
+                        {
+                            begin = m_text.begin();
+                            newPos = 0;
+                        }
                         m_text.erase(begin, m_text.begin() + m_cursPos);
                         m_cursPos = newPos;
                         newEv += INPUT_TEXT_CHANGED;
@@ -276,6 +282,8 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
 
                             oldChar = newChar;
                         }
+                        if (m_password)
+                            end = m_text.end();
                         m_text.erase(m_text.begin() + m_cursPos, end);
                         newEv += INPUT_TEXT_CHANGED;
                     }
@@ -304,7 +312,6 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
                     {
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
                         {
-                            std::string::iterator end = m_text.end();
                             int newPos = 0;
                             char oldChar = m_text[m_cursPos-1];
                             for (int i = m_cursPos-1;i>=0;i--)
@@ -322,6 +329,8 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
 
                                 oldChar = newChar;
                             }
+                            if (m_password)
+                                newPos = 0;
                             m_cursPos = newPos;
                             m_internClock.restart();
                         }
@@ -348,7 +357,6 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
                     {
                         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
                         {
-                            std::string::iterator end = m_text.end();
                             int newPos = m_text.size();
                             char oldChar = m_text[m_cursPos];
                             for (int i = m_cursPos;i<m_text.size();i++)
@@ -366,6 +374,8 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
 
                                 oldChar = newChar;
                             }
+                            if (m_password)
+                                newPos = m_text.size();
                             m_cursPos = newPos;
                             m_internClock.restart();
                         }
@@ -415,6 +425,11 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
                     if (str.size() > 0)
                         wp::Various::copyToClipboard(str);
                 }
+            }
+            if (ev.key.code == sf::Keyboard::A && (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) || sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
+            {
+                m_cursPos = m_text.size();
+                m_startingCursPos = 0;
             }
         }
     }
