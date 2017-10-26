@@ -22,6 +22,7 @@
 #include "Archive.hpp"
 #include "StandardStream.hpp"
 #include "KeySet.hpp"
+#include "ImgSequence.hpp"
 
 #include "gui/gui.hpp"
 #include "JSON/JSON.hpp"
