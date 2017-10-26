@@ -21,6 +21,7 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 * `wp::FolderBrowser` : Same as `wp::Browser` but for folders (**Windows only**).
 * `wp::Function` : A basic interface to create (whatever you like) functions. Some basic functions are already added. *Not very useful at the moment, future features will maybe use this*.
 * `wp::gui` : A module to create an user interface in SFML. Based on [SFGUI](https://github.com/TankOs/SFGUI).
+* `wp::ImgSequence` : A class to load a sequence of image and animate it as a texture buffer.
 * `wp::JSON` : A module to parse a JSON formatted string or generate one and do whatever you want with it.
 * `wp::KeySet` : A class that handle key commands and compare them. Useful to create shortcuts like Ctrl + Z.
 * `wp::light` : A module to create lights in SFML and generate shadows based on walls.
@@ -36,8 +37,6 @@ A little project i'm working on. Provides some helpful user friendly classes.<br
 ## Added soon or future projects
 
 * A wiki !! And some examples.
-* More portability, can be used without SFML or Windows but without its exclusive content. *Just an idea, it will most likely never be done.*
-* `wp::ImgSequence` : A class to load a sequence of image and animate it. (Maybe a sequence, maybe one image where the sequence is stored for performances).
 
 ---
 

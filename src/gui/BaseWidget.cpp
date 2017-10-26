@@ -38,14 +38,15 @@ Event const& BaseWidget::getEvent() const
 
 void BaseWidget::handleEvent(sf::Event const& ev)
 {
+    bool tmpOnWidget = false;
     sf::View view(sf::FloatRect(sf::FloatRect(0, 0, m_handle->getSize().x, m_handle->getSize().y)));
     Event newEv;
     sf::Vector2f mousePos = m_handle->mapPixelToCoords(sf::Mouse::getPosition(*m_handle), view);
     sf::Vector2f relativeMousePos = getInverseTransform().transformPoint(mousePos);
     if (_getHitbox().contains(relativeMousePos))
     {
-        newEv += MOUSE_ON_WIDGET;
-        if (m_ownEvent != MOUSE_ON_WIDGET)
+        tmpOnWidget = true;
+        if (!m_onWidget)
             newEv += MOUSE_ENTERED;
         if (ev.type == sf::Event::MouseButtonPressed)
         {
@@ -114,12 +115,13 @@ void BaseWidget::handleEvent(sf::Event const& ev)
     else
     {
         m_validClic = false;
-        if (m_ownEvent == MOUSE_ON_WIDGET)
+        if (m_onWidget)
             newEv += MOUSE_LEAVED;
     }
 
     _implEvent(ev, newEv, view);
     m_ownEvent = newEv;
+    m_onWidget = tmpOnWidget;
 }
 sf::FloatRect BaseWidget::getGlobalBounds() const
 {

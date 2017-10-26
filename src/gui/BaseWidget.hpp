@@ -37,6 +37,7 @@ namespace wp
             virtual void _implUpdate();
             virtual sf::FloatRect _getHitbox() const = 0;
             int m_leftClic = 0;
+            bool m_onWidget = false;
         public:
             /////////////////////////////////////////////////
                         /// \brief Returns its own event.
@@ -132,7 +133,6 @@ namespace wp
         static const Event MOUSE_BUTTON_X2_UP = Event(9);
         static const Event MOUSE_ENTERED = Event(10);
         static const Event MOUSE_LEAVED = Event(11);
-        static const Event MOUSE_ON_WIDGET = Event(12);
         static const Event MOUSE_LEFT_CLIC = Event(13);
         static const Event MOUSE_RIGHT_CLIC = Event(14);
         static const Event MOUSE_X1_CLIC = Event(15);
