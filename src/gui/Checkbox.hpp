@@ -59,6 +59,8 @@ namespace wp
             bool isChecked() const;
         };
         static const Event CHECKBOX_CHANGED = Event(20);
+        static const Event CHECKBOX_CHECKED = Event(26);
+        static const Event CHECKBOX_UNCHECKED = Event(27);
     }
 }
 

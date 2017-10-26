@@ -54,6 +54,10 @@ void Checkbox::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& vie
     {
         m_checked = !m_checked;
         newEv += CHECKBOX_CHANGED;
+        if (m_checked)
+            newEv += CHECKBOX_CHECKED;
+        else
+            newEv += CHECKBOX_UNCHECKED;
     }
 }
 sf::FloatRect Checkbox::_getHitbox() const
