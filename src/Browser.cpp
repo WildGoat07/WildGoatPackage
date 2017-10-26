@@ -146,7 +146,6 @@ namespace wp
         OPENFILENAME ofn;
         char szFileName[MAX_PATH];
         std::string tmp = m_initialFile.getFullPath();
-        tmp = tmp.substr(1);
         for (int i = 0;i<tmp.size();i++)
             szFileName[i] = tmp[i];
         szFileName[tmp.size()] = '\0';
