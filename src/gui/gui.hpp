@@ -12,6 +12,7 @@
 #include "Gauge.hpp"
 #include "Input.hpp"
 #include "ExtendedText.hpp"
+#include "Canvas.hpp"
 
 
 #endif // DEF_WP_GUI_HPP

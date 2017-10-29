@@ -9,6 +9,7 @@ Text::Text(Resource& res)
     m_textBuff.setFont(m_res->font);
     m_textBuff.setCharacterSize(m_res->textSize);
     m_textBuff.setFillColor(textColor);
+    m_handle = &res.handle;
 }
 sf::FloatRect Text::_getHitbox() const
 {

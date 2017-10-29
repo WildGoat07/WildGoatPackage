@@ -20,6 +20,7 @@ Checkbox::Checkbox(Resource& res)
 
     m_innerRectangle.setFillColor(foreground);
     m_textBuff.setFillColor(textColor);
+    m_handle = &res.handle;
 }
 void Checkbox::_implUpdate()
 {

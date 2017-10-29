@@ -17,6 +17,7 @@ Gauge::Gauge(Resource& res)
     m_lines.append(sf::Vertex(sf::Vector2f(), altBorder));
     m_rectangle.setFillColor(foreground);
     m_backLine.setFillColor(background);
+    m_handle = &res.handle;
 }
 void Gauge::_implUpdate()
 {

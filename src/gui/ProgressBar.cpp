@@ -26,6 +26,7 @@ Progressbar::Progressbar(Resource& res)
     m_innerLines.append(sf::Vertex(sf::Vector2f(), altBorder_c));
     m_innerRectangle.setFillColor(altForeground_c);
     m_outerRectangle.setFillColor(altBackground);
+    m_handle = &res.handle;
 }
 void Progressbar::_implUpdate()
 {

@@ -23,6 +23,7 @@ Input::Input(Resource& res)
     m_lines.append(sf::Vertex(sf::Vector2f()));
 
     m_beam.setFillColor(background_c);
+    m_handle = &res.handle;
 }
 void Input::_implUpdate()
 {

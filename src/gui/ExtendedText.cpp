@@ -8,6 +8,7 @@ Extendedtext::Extendedtext(Resource& res)
     m_res = &res;
     m_textBuff.setFont(m_res->font);
     m_textBuff.setSize(m_res->textSize);
+    m_handle = &res.handle;
 }
 sf::FloatRect Extendedtext::_getHitbox() const
 {

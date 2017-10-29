@@ -6,6 +6,7 @@ using namespace gui;
 Radiogroup::Radiogroup(Resource& res)
 {
     m_res = &res;
+    m_handle = &res.handle;
 }
 void Radiogroup::_implUpdate()
 {

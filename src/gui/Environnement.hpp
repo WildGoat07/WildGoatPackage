@@ -18,7 +18,9 @@ namespace wp
         public:
             sf::Font font;
             unsigned int const textSize = 13;
-            Resource()
+            sf::RenderWindow& handle;
+            Resource(sf::RenderWindow& h) :
+                handle(h)
             {
                 font = Various::loadFontFromResource("wpGuiFont");
             }
