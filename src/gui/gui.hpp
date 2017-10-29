@@ -12,6 +12,7 @@
 #include "Gauge.hpp"
 #include "Input.hpp"
 #include "ExtendedText.hpp"
+#include "Separator.hpp"
 #include "Canvas.hpp"
 
 
