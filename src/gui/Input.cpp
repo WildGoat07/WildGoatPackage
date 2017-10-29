@@ -10,6 +10,8 @@ Input::Input(Resource& res)
     m_textBuff.setCharacterSize(m_res->textSize);
     m_textBuff.setFillColor(textColor);
     m_lines.setPrimitiveType(sf::Lines);
+    m_cursPos = 0;
+    m_startingCursPos = 0;
     m_lines.append(sf::Vertex(sf::Vector2f(), altBorder));
     m_lines.append(sf::Vertex(sf::Vector2f(), altBorder));
     m_lines.append(sf::Vertex(sf::Vector2f(), altBorder));
@@ -72,8 +74,8 @@ void Input::_implUpdate()
 
     m_lines[8].position = sf::Vector2f(_getTextWidth(m_cursPos) - 0.5, 0.5 - m_res->textSize*0.2) + off;
     m_lines[9].position = sf::Vector2f(_getTextWidth(m_cursPos) - 0.5, m_res->textSize*1.2 - 0.5) + off;
-    m_beam.setPosition(sf::Vector2f(_getTextWidth(std::min(m_startingCursPos, m_cursPos)) - 0.5, 0.5 - m_res->textSize*0.2) + off);
-    m_beam.setSize(sf::Vector2f(_getTextWidth(std::max(m_startingCursPos, m_cursPos)) - 0.5  - m_beam.getPosition().x, 0.5 - m_res->textSize*0.2 + off.y) + off);
+    m_beam.setPosition(sf::Vector2f(_getTextWidth(std::min(m_startingCursPos, m_cursPos)) + 0.5, 0.5 - m_res->textSize*0.2) + off);
+    m_beam.setSize(sf::Vector2f(_getTextWidth(std::max(m_startingCursPos, m_cursPos)) - _getTextWidth(std::min(m_startingCursPos, m_cursPos)) - 0.5, 0.5 + m_res->textSize*1.4));
     if ((m_internClock.getElapsedTime().asMilliseconds()%m_beamFreq.asMilliseconds()) < m_beamFreq.asMilliseconds()/2 && m_selected)
     {
         m_lines[8].color = textColor;
@@ -127,6 +129,14 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
     }
     if (ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Left)
         m_clickDown = false;
+    if (ev.type == sf::Event::MouseButtonPressed && ev.mouseButton.button == sf::Mouse::Left && !_getHitbox().contains(mousePos))
+    {
+        if (m_selected)
+            newEv += INPUT_LOST_FOCUS;
+        m_selected = false;
+        m_cursPos = 0;
+        m_startingCursPos = 0;
+    }
     if (newEv == MOUSE_BUTTON_LEFT_DOWN)
     {
         m_clickDown = true;
@@ -148,12 +158,6 @@ void Input::_implEvent(sf::Event const& ev, Event& newEv, sf::View const& view)
         }
         m_cursPos = min;
         m_startingCursPos = min;
-    }
-    if (ev.type == sf::Event::MouseButtonPressed && ev.mouseButton.button == sf::Mouse::Left && !_getHitbox().contains(mousePos))
-    {
-        if (m_selected)
-            newEv += INPUT_LOST_FOCUS;
-        m_selected = false;
     }
 
     if (m_selected)
@@ -460,8 +464,9 @@ void Input::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.setView(sf::View(sf::FloatRect(0, 0, target.getSize().x, target.getSize().y)));
     sf::Transform tr = getTransform();
     target.draw(m_rectangle, tr);
+    if (m_startingCursPos != m_cursPos)
+        target.draw(m_beam, tr);
     target.draw(m_lines, tr);
-    target.draw(m_beam, tr);
     target.draw(m_textBuff, tr);
     target.setView(view);
 }
