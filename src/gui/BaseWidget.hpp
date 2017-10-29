@@ -30,7 +30,7 @@ namespace wp
             int m_relativeMode;
             sf::Vector2f m_relativePos;
             sf::RenderWindow* m_handle = nullptr;
-            sf::Vector2f m_padding = sf::Vector2f(5, 5);
+            sf::Vector2f m_padding = sf::Vector2f(3, 3);
             bool m_dbClicDown = false;
             bool m_validClic = false;
             virtual void _implEvent(sf::Event const&, Event&, sf::View const&);
