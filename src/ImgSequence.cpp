@@ -45,8 +45,8 @@ bool ImgSequence::open(File const& file, uint16_t fps)
                 zero += '0';
             generated = base + zero + num + "." + ext;
         }
-        wp::File new_f(generated);
-        if (!new_f.exist())
+        shared_ptr<sf::FileInputStream> new_f(new sf::FileInputStream());
+        if (!new_f->open(generated))
             fin = true;
         else
             m_files.push_back(new_f);
@@ -178,7 +178,7 @@ void ImgSequence::update()
     if (m_streamed)
     {
         sf::Image tmp;
-        tmp.loadFromFile(m_files[selectedFrame].getFullPath());
+        tmp.loadFromStream(*m_files[selectedFrame]);
         m_buffer.update(tmp);
     }
     else

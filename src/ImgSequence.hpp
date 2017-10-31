@@ -19,7 +19,7 @@ namespace wp
         uint16_t m_fps;
         AdvancedClock m_clock;
         std::vector<shared_ptr<sf::Image> > m_imgs;
-        std::vector<File> m_files;
+        std::vector<shared_ptr<sf::FileInputStream> > m_files;
         bool m_streamed;
         bool m_looped = false;
         bool m_finished = false;
